@@ -1,0 +1,25 @@
+﻿@model YourSlides.Models.Presentation
+
+<div class="presentation_view">
+    <span class="link_presentation" title="@Model.Title">
+        <a href="@Url.Action("View","Presentation", new{id = @Model.Id})">
+            <img src="@Url.Content("~/Content/slides/" + @Model.OwnerName + "/" + @Model.Id + "/title.jpg")" vspace="5"><br>
+            <span class="presentation_title">@Model.Title</span>
+        </a>
+    </span><br>
+    <div style="height:5px; margin-top: -10px; margin-bottom: 10px;">
+        <span class="link_author">
+            @Html.ActionLink(@Model.OwnerName, "Index", "User", new { id = Model.OwnerName }, null)
+        </span>
+        <br><span class="hint">Просмотров @Model.WatchCount</span>
+        <span class="date @Model.Id"></span>
+    </div>
+    <div class="edit-icon" title="Редактировать">
+        <a href="@Url.Action("Edit", "Presentation", new {id = Model.Id})">
+            <img src="@Url.Content("~/Content/images/edit.jpg")">
+        </a>
+    </div>
+    <div class="count-slides">@Model.SlideCount</div>
+
+    <script language="JavaScript">window.onload = createDate('@Model.Id', @Model.Created)</script>
+</div>

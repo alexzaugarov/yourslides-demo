@@ -1,0 +1,15 @@
+﻿<div class="user_panel">
+    <div class="btn-container">
+        <div class="add_btn">
+            <a href="/upload">Добавить</a>
+        </div>
+    </div>
+    @if (Request.IsAuthenticated) {
+
+    } else {
+        <div class="auth_control">
+            @Html.ActionLink("Вход", "Login")
+            @Html.ActionLink("Регистрация", "Signin")
+        </div>
+    }
+</div>

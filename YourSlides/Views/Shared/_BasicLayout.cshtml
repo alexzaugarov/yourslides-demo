@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="@Url.Content("~/Content/core.css")" rel="stylesheet" type="text/css" />
+    @RenderSection("Styles", false)
+    @RenderSection("head", false)
+</head>
+<body>
+    <div class="wrap">
+        <div id="header" class="head">
+            <div class="logo">
+                <a href="/"><img src=@Url.Content("~/Content/images/logo60.jpg")></a>
+            </div>
+            @Html.Partial("_UserPanel")
+            <div class="search">
+                <form id="search-form" action="/" class="search_form">
+                    <input type="text" class="search_field" name="q" autocomplete="off" value="<?echo $searchpresentation?>">
+                    <button class="search_btn" type="submit" style="border: 0; background: transparent; padding: 0px; margin: 0;">
+                        <img src=@Url.Content("~/Content/images/search_btn30.jpg")>
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="content_main">
+            @RenderBody()
+        </div>
+        <div style="height: 50px; clear:both; padding-top: 15px"></div>
+        <div class="footer">
+            YourSlides @DateTime.Now.Year
+        </div>
+    </div>
+
+</body>
+</html>
