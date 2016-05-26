@@ -212,3 +212,14 @@ img{
     color: red;
     border-color: red;
 }
+
+form .editor-label, form .editor-field {
+    display: inline-block;
+}
+form .editor-label {
+    width: 130px;
+}
+.registration-form {
+    margin: auto;
+    width: 300px;
+}

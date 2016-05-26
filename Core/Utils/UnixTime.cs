@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CollectStatus.Utils {
+namespace Core.Utils {
     public class UnixTime {
         public static int Now {
             get {

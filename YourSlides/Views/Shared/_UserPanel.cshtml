@@ -4,12 +4,13 @@
             <a href="/upload">Добавить</a>
         </div>
     </div>
-    @if (Request.IsAuthenticated) {
+    <div class="auth_control">
+        @if (Request.IsAuthenticated) {
+            @Html.ActionLink("Выход", "Signout", "Auth")
+        } else {
+            @Html.ActionLink("Вход", "Signin", "Auth")
+            @Html.ActionLink("Регистрация", "Signup", "Auth")
 
-    } else {
-        <div class="auth_control">
-            @Html.ActionLink("Вход", "Login")
-            @Html.ActionLink("Регистрация", "Signin")
-        </div>
-    }
+        }
+    </div>
 </div>
