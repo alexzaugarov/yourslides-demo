@@ -144,8 +144,32 @@
     <Content Include="Content\images\search_btn.png" />
     <Content Include="Content\images\search_btn30.jpg" />
     <Content Include="Content\images\signin30.jpg" />
+    <Content Include="Content\player.swf" />
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="scripts\fine-uploader\continue.gif" />
+    <Content Include="scripts\fine-uploader\edit.gif" />
+    <Content Include="scripts\fine-uploader\fine-uploader-gallery.css" />
+    <Content Include="scripts\fine-uploader\fine-uploader-gallery.min.css" />
+    <Content Include="scripts\fine-uploader\fine-uploader-new.css" />
+    <Content Include="scripts\fine-uploader\fine-uploader-new.min.css" />
+    <Content Include="scripts\fine-uploader\fine-uploader.css" />
+    <Content Include="scripts\fine-uploader\fine-uploader.js" />
+    <Content Include="scripts\fine-uploader\fine-uploader.min.css" />
+    <Content Include="scripts\fine-uploader\fine-uploader.min.js" />
+    <Content Include="scripts\fine-uploader\iframe.xss.response.js" />
+    <Content Include="scripts\fine-uploader\loading.gif" />
+    <Content Include="scripts\fine-uploader\pause.gif" />
+    <Content Include="scripts\fine-uploader\placeholders\not_available-generic.png" />
+    <Content Include="scripts\fine-uploader\placeholders\waiting-generic.png" />
+    <Content Include="scripts\fine-uploader\processing.gif" />
+    <Content Include="scripts\fine-uploader\retry.gif" />
+    <Content Include="scripts\fine-uploader\templates\default.html" />
+    <Content Include="scripts\fine-uploader\templates\gallery.html" />
+    <Content Include="scripts\fine-uploader\templates\simple-thumbnails.html" />
+    <Content Include="scripts\fine-uploader\trash.gif" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -164,6 +188,9 @@
     <Compile Include="Models\MainPageModel.cs" />
     <Compile Include="Models\Presentation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tools\FineUploader.cs" />
+    <Compile Include="Tools\FineUploaderResult.cs" />
+    <Compile Include="Tools\Obfuscator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -174,7 +201,11 @@
     <Content Include="Views\Shared\_UserPanel.cshtml" />
     <Content Include="Views\Shared\_PresentationPreviewItem.cshtml" />
     <Content Include="Views\Auth\Signin.cshtml" />
+    <Content Include="scripts\fine-uploader\LICENSE" />
     <None Include="Views\Auth\Signup.cshtml" />
+    <Content Include="Views\Presentation\Upload.cshtml" />
+    <None Include="Views\Presentation\Watch.cshtml" />
+    <Content Include="Views\Shared\_Player.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

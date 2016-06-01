@@ -43,6 +43,7 @@ namespace Infrastructure.Migrations {
                 var userToInsert = new User { UserName = "Admin", Email = "alex52711@yandex.ru" };
                 userManager.Create(userToInsert, "administratorpassword");
                 userManager.AddToRole(userToInsert.Id, "Admins");
+                userManager.AddToRole(userToInsert.Id, "Users");
             }
         }
     }

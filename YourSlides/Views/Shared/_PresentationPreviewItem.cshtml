@@ -2,7 +2,7 @@
 
 <div class="presentation_view">
     <span class="link_presentation" title="@Model.Title">
-        <a href="@Url.Action("View","Presentation", new{id = @Model.Id})">
+        <a href="@Url.Action("Watch","Presentation", new{id = @Model.Id})">
             <img src="@Url.Content("~/Content/slides/" + @Model.OwnerName + "/" + @Model.Id + "/title.jpg")" vspace="5"><br>
             <span class="presentation_title">@Model.Title</span>
         </a>
