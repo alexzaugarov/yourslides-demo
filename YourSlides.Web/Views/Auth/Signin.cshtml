@@ -1,0 +1,11 @@
+﻿@model YourSlides.Web.Models.Auth.SigninPage
+@{
+    ViewBag.Title = "Авторизация";
+}
+
+<h2>Авторизация</h2>
+
+@using (Html.BeginForm()) {
+    @Html.EditorForModel()
+    <input type="image" src="@Url.Content("~/Content/images/signin30.jpg")">
+}

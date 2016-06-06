@@ -1,0 +1,66 @@
+﻿@model YourSlides.Web.Models.PresentationViewModel
+
+@{
+    ViewBag.Title = @Model.Title + " - Yourslides";
+}
+
+<div id="player" height="1000px">
+    @Html.Partial("_Player")
+</div>
+<div class="title">
+    <div class="info">
+        <h2>@Model.Title</h2>
+        Автор: <a href="/user/@Model.OwnerName">@Model.OwnerName</a><br>
+        Добавлено: <span id="created"></span>
+        <script language="JavaScript">
+            months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+            string_date = "";
+            date = new Date(@Model.Created);
+            string_date += date.getDate() + ' ';
+            string_date += months[date.getMonth()] + ' ';
+            string_date += date.getFullYear();
+            $('#created').text(string_date);
+        </script>
+    </div>
+    <div class="views">
+        <p>
+            Просмотров<br>
+            @Model.WatchCount
+    </div>
+
+</div>
+<div class="description">
+    <div class="buttons">
+        <button id="btnDescr" class="btnDescr active" onclick="activate(this)">Описание</button>
+        <button id="btnEmbed" class="btnEmbed inactive" onclick="activate(this)">Код вставки</button>
+    </div>
+    <div>
+        <div class="info-and-comments">
+            <div class="content-description">
+
+            </div>
+            <div class="content-embed">
+                <textarea rows="2" style="width:100%"><iframe width="640" height="390" src="/embed/@Model.Id" frameborder="0" allowfullscreen></iframe></textarea>
+
+            </div>
+            <h2 align="center">Комментарии</h2>
+            <div class="postComment">
+                @if (Request.IsAuthenticated) {
+                    <textarea id="text-new-comment" rows="2" style="width:100%" placeholder="Оставить комментарий" onfocus="showPostButton()"></textarea>
+                    <button onclick="postComment('<?echo $id_presentation?>')">Отправить</button>
+                    <span id="status"></span>
+                } else {
+                    @Html.Raw("Комментарии могут оставлять только зарегистрированные пользователи")
+                }
+            </div>
+            <div class="commentary">
+                
+            </div>
+            <div id="loadCommentButton" align="center">
+                <button onclick="loadComments('@Model.Id', -1)">Загрузить</button>
+            </div>
+        </div>
+        <div class="related-presentation">
+        </div>
+    </div>
+</div>

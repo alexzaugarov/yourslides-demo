@@ -1,0 +1,9 @@
+﻿@model YourSlides.Web.Models.MainPageModel
+@{
+    ViewBag.Title = "YourSlides - делитесь презентациями";
+}
+
+<h2>Все презентации</h2>
+@foreach (var presentation in Model.Presentations) {
+    @Html.Partial("_PresentationPreviewItem", presentation)
+}
