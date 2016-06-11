@@ -1,11 +1,11 @@
 ﻿@model YourSlides.Web.Models.PresentationViewModel
 
-<object width="100%" height="100%">
-    <param name="movie" value="@Url.Content("~/Content/player.swf")"></param>
-    <param name="FlashVars" value="img_url=@Url.Content(Path.Combine("~/storage/",Model.Id))/&amount_sl=@Model.SlideCount"></param>
-    <param name="allowFullScreen" value="true"></param>
-    <param name="scale" value="noScale"></param>
-    <param name="bgcolor" value="#ffffff"></param>
+<object class="player__container">
+    <param name="movie" value="@Url.Content("~/Content/player.swf")"/>
+    <param name="FlashVars" value="img_url=@Url.Content(Path.Combine("~/storage/",Model.Id))/&amount_sl=@Model.SlideCount"/>
+    <param name="allowFullScreen" value="true"/>
+    <param name="scale" value="noScale"/>
+    <param name="bgcolor" value="@Model.Color"/>
     <param name="wmode" value="opaque" />
-    <embed src="@Url.Content("~/Content/player.swf")" width="100%" height="100%" allowfullscreen="true" scale="noScale" flashvars="img_url=@Url.Content(Path.Combine("~/storage/",Model.Id))/&amount_sl=@Model.SlideCount" bgcolor="#ffffff" wmode="opaque">
+    <embed src="@Url.Content("~/Content/player.swf")" class="player__container" allowfullscreen="true" scale="noScale" flashvars="img_url=@Url.Content(Path.Combine("~/storage/",Model.Id))/&amount_sl=@Model.SlideCount" bgcolor="@Model.Color" wmode="opaque">
 </object>

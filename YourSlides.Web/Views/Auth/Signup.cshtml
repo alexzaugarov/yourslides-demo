@@ -3,10 +3,13 @@
 @{
     ViewBag.Title = "Регистрация";
 }
+<div class="auth-form">
+    <h2>Регистрация</h2>
 
-<h2>Регистрация</h2>
-
-@using (Html.BeginForm("Signup", null, FormMethod.Post, new { @class = "registration-form" })) {
-    @Html.EditorForModel()
-    <input type="image" src="@Url.Content("~/Content/images/registeractive30.jpg")" name="submit" @*value="Зарегистрироваться"*@>
-}
+    @using (Html.BeginForm("Signup", null, FormMethod.Post, new { @class = "registration-form" })) {
+        @Html.EditorForModel()
+        <div class="auth-form__submit">
+            <button type="submit" class="ys-button"> Зарегистрироваться</button>
+        </div>
+    }
+</div>

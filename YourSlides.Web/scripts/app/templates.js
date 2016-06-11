@@ -1,0 +1,1 @@
+!function(){var a=Handlebars.template,e=Handlebars.templates=Handlebars.templates||{};e["main-page"]=a({compiler:[7,">= 4.0.0"],main:function(a,e,n,t,l){return"\ufeff"},useData:!0})}();

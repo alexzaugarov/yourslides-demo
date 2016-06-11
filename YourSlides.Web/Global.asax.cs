@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Web.Optimization;
 using System.Web.Routing;
 using Ninject;
 using Yourslides.FileHandler.Converter;
@@ -13,6 +14,7 @@ namespace YourSlides.Web
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            BundleConfig.RegisterBundle(BundleTable.Bundles);
             IConverterManager manager = DependencyResolver.Current.GetService<IConverterManager>();
             Task.Run(() => manager.Start());
         }

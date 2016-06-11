@@ -1,0 +1,48 @@
+﻿@using Yourslides.Model
+@model Yourslides.Model.Presentation
+@{
+    var visibility = new Dictionary<string, PresentationVisibility> {
+        {"Открытый доступ", PresentationVisibility.All},
+        {"Доступ по ссылке", PresentationVisibility.Link},
+        {"Закрытый доступ", PresentationVisibility.Hide}
+    };
+}
+<div class="edit-info-form edit-info-form_hide">
+    <div class="edit-info-form__main">
+        <div>
+            <label class="edit-info-form__label">Название</label>
+            <textarea class="text-input" rows="2" maxlength="100" name="title" placeholder="Максимум 100 символов" required>
+                @Model.Title
+            </textarea>
+        </div>
+        <div>
+            <label class="edit-info-form__label">Описание</label>
+            <textarea class="text-input" rows="10" maxlength="1000" name="description" placeholder="Максимум 1000 символов">
+                @Model.Description
+            </textarea>
+        </div>
+        <div>
+            <label class="edit-info-form__label">Цвет фона в плеере</label>
+            <input type="jscolor" name="color" value="@Model.Color">
+        </div>
+    </div>
+    <div class="edit-info-form__advanced">
+        <div>
+            <label class="edit-info-form__label">Доступ</label>
+            @foreach (var v in visibility) {
+                if (Model.Visibility == v.Value) {
+                    <p>@Html.RadioButton("visibility", v.Value, true) @v.Key</p>
+                } else {
+                    <p>@Html.RadioButton("visibility", v.Value) @v.Key</p>
+                }
+            }
+        </div>
+        <div>
+            <label class="edit-info-form__label">Комментарии</label>
+            @Html.RadioButton("commentenable", 1, Model.CommentEnable)Включить
+            @Html.RadioButton("commentenable", 1, !Model.CommentEnable)Выключить
+        </div>
+    </div>
+    @Html.HiddenFor(p => p.Id)
+    @Html.HiddenFor(p => p.LogoSlideIndex)
+</div>

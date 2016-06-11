@@ -92,7 +92,7 @@
     background: #33B6CC;
 }
 .qq-upload-button-focus {
-    outline: 1px dotted #000000;
+    outline: 0;
 }
 
 

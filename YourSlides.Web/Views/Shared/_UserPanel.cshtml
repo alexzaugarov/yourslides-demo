@@ -1,16 +1,10 @@
-﻿<div class="user_panel">
-    <div class="btn-container">
-        <div class="add_btn">
-            @Html.ActionLink("Добавить", "Upload", "Presentation")
-        </div>
+﻿@if (Request.IsAuthenticated) {
+    @Html.ActionLink("Добавить", "Upload", "Presentation", null, new { @class = "ys-button" })
+    <div class="header__auth-control">
+        <a herf="@Url.Action("Signout", "Auth")" defualt-behavior>Выход</a>
     </div>
-    <div class="auth_control">
-        @if (Request.IsAuthenticated) {
-            @Html.ActionLink("Выход", "Signout", "Auth")
-        } else {
-            @Html.ActionLink("Вход", "Signin", "Auth")
-            @Html.ActionLink("Регистрация", "Signup", "Auth")
+} else {
+    @Html.ActionLink("Вход", "Signin", "Auth", null, new { @class = "ys-button auth-controll__button-item" })
+    @Html.ActionLink("Регистрация", "Signup", "Auth", null, new { @class = "ys-button auth-controll__button-item" })
 
-        }
-    </div>
-</div>
+}

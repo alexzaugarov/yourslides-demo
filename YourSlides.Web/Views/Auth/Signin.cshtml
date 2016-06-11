@@ -2,10 +2,14 @@
 @{
     ViewBag.Title = "Авторизация";
 }
+<div class="auth-form">
+    <h2>Авторизация</h2>
 
-<h2>Авторизация</h2>
-
-@using (Html.BeginForm()) {
-    @Html.EditorForModel()
-    <input type="image" src="@Url.Content("~/Content/images/signin30.jpg")">
-}
+    @using (Html.BeginForm("Signin", null, FormMethod.Post, new { @class = "auth-form__form" })) {
+        @Html.EditorForModel()
+        <div class="auth-form__submit">
+            <button type="submit" class="ys-button">Войти</button>
+        </div>
+        
+    }
+</div>

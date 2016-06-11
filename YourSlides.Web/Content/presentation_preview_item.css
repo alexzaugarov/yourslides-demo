@@ -1,0 +1,103 @@
+﻿.presentation-view-item {
+    display: inline-block;
+    margin: 10px;
+    vertical-align: top;
+    position: relative;
+    text-align: left;
+}
+
+.presentation-view-item__icon {
+}
+
+.presentation-view-item__image-small {
+    max-width: 160px;
+}
+
+.presentation-view-item__image-big {
+    max-width: 320px;
+}
+
+.presentation-view-item__link {
+    display: block;
+}
+
+.presentation-view-item__image-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.presentation-view-item_size_small {
+    max-width: 160px;
+}
+.presentation-view-item_size_big {
+    max-width: 320px;
+}
+.presentation-view-item_size_small .presentation-view-item__image-container {
+    width: 160px;
+    height: 90px;
+}
+.presentation-view-item_size_big .presentation-view-item__image-container {
+    width: 320px;
+    height: 180px;
+}
+.presentation-view-item_size_big .presentation-view-item__image-big {
+    display: block;
+}
+
+.presentation-view-item_size_big .presentation-view-item__image-small {
+    display: none;
+}
+
+.presentation-view-item_size_small .presentation-view-item__image-big {
+    display: none;
+}
+
+.presentation-view-item_size_small .presentation-view-item__image-small {
+    display: block;
+}
+
+.presentation-view-item__image-container img {
+    margin-top: -5%;
+}
+
+.presentation-view-item__slide-count {
+    position: absolute;
+    bottom: 0;
+    right: 2px;
+    background-color: black;
+    color: white;
+    padding: 1px 5px;
+    -ms-opacity: 0.85;
+    opacity: 0.85;
+    -webkit-filter: alpha(opacity=85);
+    -moz-filter: alpha(opacity=85);
+    -o-filter: alpha(opacity=85);
+    filter: alpha(opacity=85);
+    font-weight: bold;
+}
+
+.presentation-view-item__title {
+    margin: 5px 0;
+}
+
+.presentation-view-item__edit-link {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    opacity: 0.25;
+    filter: alpha(Opacity=25);
+}
+
+    .presentation-view-item__edit-link:hover {
+        opacity: 1;
+        filter: alpha(Opacity=1);
+    }
+
+.presentation-view-item__info, .presentation-view-item__owner-name {
+    color: #9c9c9c;
+    font-size: 10px;
+}
+
+.presentation-view-item__owner-name {
+    font-size: 12px;
+}

@@ -1,66 +1,108 @@
-﻿@model YourSlides.Web.Models.PresentationViewModel
+﻿@using Yourslides.Utils.DateTimeUtils
+@model YourSlides.Web.Models.PresentationViewModel
 
 @{
     ViewBag.Title = @Model.Title + " - Yourslides";
 }
-
-<div id="player" height="1000px">
+@section Styles {
+    <link href="~/Content/presentation_watch.css" rel="stylesheet" type="text/css">
+}
+<div class="player">
     @Html.Partial("_Player")
 </div>
-<div class="title">
-    <div class="info">
+<div class="info">
+    <div class="info__title" title="@Model.Title">
         <h2>@Model.Title</h2>
-        Автор: <a href="/user/@Model.OwnerName">@Model.OwnerName</a><br>
-        Добавлено: <span id="created"></span>
-        <script language="JavaScript">
-            months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
-            string_date = "";
-            date = new Date(@Model.Created);
-            string_date += date.getDate() + ' ';
-            string_date += months[date.getMonth()] + ' ';
-            string_date += date.getFullYear();
-            $('#created').text(string_date);
-        </script>
     </div>
-    <div class="views">
-        <p>
-            Просмотров<br>
-            @Model.WatchCount
+    <div class="info__common">
+        <div class="info__watch-count">
+            Просмотров @Model.WatchCount
+        </div>
+        <div class="info__author-and-date">
+            Автор: <a href="/user/@Model.OwnerName">@Model.OwnerName</a><br>
+            Добавлено: <span data-p-created="@Model.Created"></span>
+        </div>
     </div>
-
+    <div class="info__action">
+        <div class="info__buttons">
+            <a href="#" id="show-description-button">Описание</a>
+            <a href="#" id="show-embed-button">Код вставки</a>
+        </div>
+        <div class="info__description">
+            @Model.Description
+        </div>
+        <div class="info__embed">
+            <textarea rows="2" class="info__embed-textbox"><iframe width="640" height="390" src="@Request.Url.Host/embed/@Model.Id" frameborder="0" allowfullscreen></iframe></textarea>
+        </div>
+    </div>
 </div>
-<div class="description">
-    <div class="buttons">
-        <button id="btnDescr" class="btnDescr active" onclick="activate(this)">Описание</button>
-        <button id="btnEmbed" class="btnEmbed inactive" onclick="activate(this)">Код вставки</button>
-    </div>
-    <div>
-        <div class="info-and-comments">
-            <div class="content-description">
-
-            </div>
-            <div class="content-embed">
-                <textarea rows="2" style="width:100%"><iframe width="640" height="390" src="/embed/@Model.Id" frameborder="0" allowfullscreen></iframe></textarea>
-
-            </div>
-            <h2 align="center">Комментарии</h2>
-            <div class="postComment">
+<div class="p-watch__footer">
+    <div class="p-watch__comments comments">
+        @if (Model.CommentEnable) {
+            <h2>Комментарии</h2>
+            <div class="comments__post">
                 @if (Request.IsAuthenticated) {
-                    <textarea id="text-new-comment" rows="2" style="width:100%" placeholder="Оставить комментарий" onfocus="showPostButton()"></textarea>
-                    <button onclick="postComment('<?echo $id_presentation?>')">Отправить</button>
-                    <span id="status"></span>
+                    <form action="/api/comment" method="POST" id="comments__post-form">
+                        <input type="hidden" name="presentationid" value="@Model.Id" />
+                        <textarea id="comment-input-field" rows="2" class="comments__input-field" name="commenttext" placeholder="Оставить комментарий"></textarea>
+                        <span class="comments__post-button-container ys-hide">
+                            <button id="post-comment-button" type="submit" class="ys-button">Отправить</button>
+                        </span>
+                        <span id="status"></span>
+                    </form>
+
+
                 } else {
-                    @Html.Raw("Комментарии могут оставлять только зарегистрированные пользователи")
+                    <p>Комментарии могут оставлять только зарегистрированные пользователи</p>
                 }
             </div>
-            <div class="commentary">
-                
+            <div class="comments__container">
+                <div class="comment-item">
+                    <div class="comment-item__author">
+                        <a href="/user/@Model.OwnerName">@Model.OwnerName</a>
+                    </div>
+                    <div class="comment-item__date" data-comment-post-date="@UnixTime.Now"></div>
+                    <div class="comment-item__content">
+                        Текст комментария
+                    </div>
+                </div>
+                <div class="comment-item">
+                    <div class="comment-item__author">
+                        <a href="/user/@Model.OwnerName">@Model.OwnerName</a>
+                    </div>
+                    <div class="comment-item__date" data-comment-post-date="@UnixTime.Now"></div>
+                    <div class="comment-item__content">
+                        Текст комментария
+                    </div>
+                </div>
+                <div class="comment-item">
+                    <div class="comment-item__author">
+                        <a href="/user/@Model.OwnerName">@Model.OwnerName</a>
+                    </div>
+                    <div class="comment-item__date" data-comment-post-date="@UnixTime.Now"></div>
+                    <div class="comment-item__content">
+                        Текст комментария
+                    </div>
+                </div>
+                <div class="comment-item">
+                    <div class="comment-item__author">
+                        <a href="/user/@Model.OwnerName">@Model.OwnerName</a>
+                    </div>
+                    <div class="comment-item__date" data-comment-post-date="@UnixTime.Now"></div>
+                    <div class="comment-item__content">
+                        Текст комментария
+                    </div>
+                </div>
             </div>
             <div id="loadCommentButton" align="center">
                 <button onclick="loadComments('@Model.Id', -1)">Загрузить</button>
             </div>
-        </div>
-        <div class="related-presentation">
-        </div>
+        } else {
+            <h2>Комментарии отключены</h2>
+        }
+    </div>
+    <div class="p-watch__related-presentation">
+        @Html.Partial("_PresentationPreviewItem", Model)
     </div>
 </div>
+<script src="~/scripts/app/p-watch.js" type="text/javascript"></script>

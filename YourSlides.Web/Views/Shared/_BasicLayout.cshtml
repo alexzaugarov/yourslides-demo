@@ -3,33 +3,51 @@
 <head>
     <title>@ViewBag.Title</title>
     <link href="@Url.Content("~/Content/core.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/presentation_preview_item.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/normalize.css")" rel="stylesheet" type="text/css"/>
+    <link href="@Url.Content("~/Content/auth.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/scripts/lib/require.js")" type="text/javascript"></script>
+    <script>
+        Yourslides = {
+            justLoaded: true
+        };
+    </script>
+    <script src="@Url.Content("~/scripts/config.js")" type="text/javascript"></script>
     @RenderSection("Styles", false)
     @RenderSection("head", false)
 </head>
 <body>
     <div class="wrap">
-        <div id="header" class="head">
-            <div class="logo">
+        <div class="header">
+            <div class="header__logo">
                 <a href="/"><img src=@Url.Content("~/Content/images/logo60.jpg")></a>
             </div>
-            @Html.Partial("_UserPanel")
-            <div class="search">
-                <form id="search-form" action="/" class="search_form">
-                    <input type="text" class="search_field" name="q" autocomplete="off" value="">
-                    <button class="search_btn" type="submit" style="border: 0; background: transparent; padding: 0px; margin: 0;">
-                        <img src=@Url.Content("~/Content/images/search_btn30.jpg")>
-                    </button>
-                </form>
+            <div class="header__container">
+                <div class="header__user-panel">
+                     @Html.Partial("_UserPanel")
+                </div>
+                <div class="header__search">
+                    <form id="search-form" autocomplete="off"  action="/" class="header__search-form search-form">
+                        <div class="search-form__input-text-container">
+                            <div style="height: 100%"><input type="text" class="search-form__input-text" name="q" autocomplete="off" value=""></div>
+
+                        </div>
+                        <div class="search-form__input-text-container">
+                            <button type="submit" class="ys-button">Поиск</button>
+                        </div>
+                    </form>
+                </div>
+
             </div>
         </div>
         <div class="content_main">
             @RenderBody()
         </div>
-        <div style="height: 50px; clear:both; padding-top: 15px"></div>
+        <div class="footer-clearfix"></div>
         <div class="footer">
             YourSlides @DateTime.Now.Year
         </div>
     </div>
-
+    <script src="~/scripts/app/basic.js" type="text/javascript"></script>
 </body>
 </html>

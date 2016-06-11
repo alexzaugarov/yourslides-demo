@@ -9,6 +9,7 @@ namespace YourSlides.Web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.RouteExistingFiles = false;
+            routes.LowercaseUrls = true;
             routes.MapRoute(
                 name: "GetSlideWithQuality",
                 url: "Presentation/GetSlide/{presentationId}/{quality}/{slideIndex}",

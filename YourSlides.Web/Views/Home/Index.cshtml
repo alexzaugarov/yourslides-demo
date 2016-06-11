@@ -4,6 +4,8 @@
 }
 
 <h2>Все презентации</h2>
-@foreach (var presentation in Model.Presentations) {
-    @Html.Partial("_PresentationPreviewItem", presentation)
-}
+<div class="presentation-views-list">
+    @foreach (var presentation in Model.Presentations) {
+        @Html.Partial("_PresentationPreviewItem", presentation)
+    }
+</div>

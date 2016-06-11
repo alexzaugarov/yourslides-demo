@@ -19,6 +19,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,6 +39,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="AutoMapper, Version=4.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
@@ -84,7 +89,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.5.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
@@ -103,6 +108,11 @@
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -112,6 +122,18 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -121,6 +143,10 @@
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -148,6 +174,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\auth.css" />
     <Content Include="Content\core.css" />
     <Content Include="Content\images\add.jpg" />
     <Content Include="Content\images\add30.jpg" />
@@ -164,8 +191,19 @@
     <Content Include="Content\images\search_btn.png" />
     <Content Include="Content\images\search_btn30.jpg" />
     <Content Include="Content\images\signin30.jpg" />
+    <Content Include="Content\normalize.css" />
     <Content Include="Content\player.swf" />
+    <Content Include="Content\presentation_preview_item.css" />
+    <Content Include="Content\presentation_watch.css" />
+    <Content Include="Content\upload.css" />
     <Content Include="Global.asax" />
+    <Content Include="scripts\app\basic.js" />
+    <Content Include="scripts\app\controllers\Index.js" />
+    <Content Include="scripts\app\controller_table.js" />
+    <Content Include="scripts\app\main.js" />
+    <Content Include="scripts\app\p-watch.js" />
+    <Content Include="scripts\app\templates.js" />
+    <Content Include="scripts\config.js" />
     <Content Include="scripts\fine-uploader\continue.gif" />
     <Content Include="scripts\fine-uploader\edit.gif" />
     <Content Include="scripts\fine-uploader\fine-uploader-gallery.css" />
@@ -187,11 +225,34 @@
     <Content Include="scripts\fine-uploader\templates\gallery.html" />
     <Content Include="scripts\fine-uploader\templates\simple-thumbnails.html" />
     <Content Include="scripts\fine-uploader\trash.gif" />
+    <None Include="scripts\lib\jquery-2.2.3-vsdoc.js" />
+    <Content Include="scripts\lib\crossroads.js" />
+    <Content Include="scripts\lib\crossroads.min.js" />
+    <Content Include="scripts\lib\handlebars-latest.js" />
+    <Content Include="scripts\lib\handlebars.min-latest.js" />
+    <Content Include="scripts\lib\handlebars.runtime-latest.js" />
+    <Content Include="scripts\lib\jquery-2.2.3.js" />
+    <Content Include="scripts\lib\jquery-2.2.3.min.js" />
+    <Content Include="scripts\lib\jquery.history-min.js" />
+    <Content Include="scripts\lib\jquery.history.js" />
+    <Content Include="scripts\lib\jscolor.js" />
+    <Content Include="scripts\lib\jscolor.min.js" />
+    <Content Include="scripts\lib\r.js" />
+    <Content Include="scripts\lib\require.js" />
+    <Content Include="scripts\lib\moment-with-locales.js" />
+    <Content Include="scripts\lib\moment-with-locales.min.js" />
+    <Content Include="scripts\lib\moment.js" />
+    <Content Include="scripts\lib\moment.min.js" />
+    <Content Include="scripts\lib\path.js" />
+    <Content Include="scripts\lib\path.min.js" />
+    <Content Include="scripts\lib\signals.js" />
+    <Content Include="scripts\lib\signals.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
@@ -230,10 +291,13 @@
     <Content Include="Views\Shared\_PresentationPreviewItem.cshtml" />
     <Content Include="Views\Auth\Signin.cshtml" />
     <Content Include="scripts\fine-uploader\LICENSE" />
+    <Content Include="scripts\lib\jquery-2.2.3.min.map" />
+    <Content Include="scripts\templates\main-page.handlebars" />
     <None Include="Views\Auth\Signup.cshtml" />
     <Content Include="Views\Presentation\Upload.cshtml" />
     <None Include="Views\Presentation\Watch.cshtml" />
     <Content Include="Views\Shared\_Player.cshtml" />
+    <Content Include="Views\Shared\_PresentationEditInfoForm.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -293,6 +357,9 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>handlebars -m $(ProjectDir)scripts\templates\ -f $(ProjectDir)scripts\app\templates.js</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

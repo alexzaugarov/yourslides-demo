@@ -1,0 +1,3 @@
+﻿define("IndexController", [], function(parameters) {
+    
+})
