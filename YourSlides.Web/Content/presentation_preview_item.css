@@ -57,7 +57,7 @@
 }
 
 .presentation-view-item__image-container img {
-    margin-top: -5%;
+    /*margin-top: -5%;*/
 }
 
 .presentation-view-item__slide-count {
@@ -100,4 +100,30 @@
 
 .presentation-view-item__owner-name {
     font-size: 12px;
+}
+
+.presentation-view-list-item > div {
+    display: inline-block;
+    vertical-align: top;
+}
+.presentation-view-list-item {
+    margin: 20px;
+    border-bottom: 1px solid #06f;
+    padding: 10px;
+    background-color: #f7f7f7;
+}
+.presentation-view-item-list__max-height {
+    max-height: 90px;
+}
+.presentation-view-item-list__size_fix {
+    width: 160px;
+    height: 90px;
+}
+.presentation-view-list-item__info {
+    padding: 0 10px;
+    width: 370px;
+    box-sizing: border-box;
+}
+.presentation-view-list-item__actions {
+    width: 130px;
 }

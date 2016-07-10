@@ -1,5 +1,6 @@
 ﻿.player {
-    height: 500px;
+    height: 300px;
+    min-height: 500px;
 }
 .player__container {
     width: 100%;
@@ -53,7 +54,21 @@
     font-size: 75%;
     color: #aaaaaa;
 }
+.comment-item__content, .comment-item__actions{
+    margin-left: 15px;
+}
 .comment-item__content {
-    margin-left: 25px;
-    margin-bottom: 10px;
+    padding: 10px;
+}
+.comments__states {
+    margin-top: 10px;
+}
+.action-delete {
+    line-height: 16px;
+}
+.comment-item:hover .comment-item__actions {
+    visibility: visible;
+}
+.comment-item__actions {
+    visibility: hidden;
 }

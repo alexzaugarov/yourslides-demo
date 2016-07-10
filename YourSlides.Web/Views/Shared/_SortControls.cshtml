@@ -1,0 +1,41 @@
+﻿@using Yourslides.Model.SelectionOptions
+@model Yourslides.Model.SelectionOptions.PresentationSelectionOptions
+
+@helper ChooseSortType(string id, string text, SortColumn column) {
+    if (Model.SortColumn == column) {
+        if (Model.SortType == SortType.Ascending) {
+            <a class="link-selected sort-type-ascending link-button" href="#" id="@id" data-default-sort-type="@SortType.Descending" data-sort-type="@SortType.Descending" data-sort-column="@column">@text</a>
+
+        } else {
+            <a class="link-selected sort-type-descending link-button" href="#" id="@id" data-default-sort-type="@SortType.Descending" data-sort-type="@SortType.Ascending" data-sort-column="@column">@text</a>
+
+        }
+    } else {
+        <a href="#" class="link-button" id="@id" data-default-sort-type="@SortType.Descending" data-sort-type="@SortType.Descending" data-sort-column="@column">@text</a>
+    }
+}
+<div class="sort-controls">
+    Сортировать:
+    <span class="sort-control-item inline-control-item">
+        @ChooseSortType("sort-by-date", "по дате", SortColumn.Date)
+    </span>
+    <span class="sort-control-item inline-control-item">
+        @ChooseSortType("sort-by-watch", "по количеству просмотров", SortColumn.WatchCount)
+    </span>
+    <span class="sort-control-item inline-control-item">
+        @ChooseSortType("sort-by-slide", "по количеству слайдов", SortColumn.SlideCount)
+    </span>
+    <div id="sort-control-inputs" class="sort-controls__form-inputs ys-hide">
+
+        @Html.RadioButton("sortcolumn", SortColumn.Date, Model.SortColumn == SortColumn.Date)
+        @Html.RadioButton("sortcolumn", SortColumn.SlideCount, Model.SortColumn == SortColumn.WatchCount)
+        @Html.RadioButton("sortcolumn", SortColumn.WatchCount, Model.SortColumn == SortColumn.SlideCount)
+        @Html.RadioButton("sorttype", SortType.Ascending, Model.SortType == SortType.Ascending)
+        @Html.RadioButton("sorttype", SortType.Descending, Model.SortType == SortType.Descending)
+    </div>
+    <div id="select-control--inputs">
+        @Html.Hidden("count", 500)
+        @Html.Hidden("offset")
+    </div>
+</div>
+

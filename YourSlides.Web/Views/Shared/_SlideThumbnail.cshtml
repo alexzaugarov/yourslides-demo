@@ -1,0 +1,6 @@
+﻿@model YourSlides.Web.Models.ThumbnailItem
+
+<div data-slide-index="@Model.SlideIndex" class="thumbnail-slide-container__item thumbnail-item @Model.SelectedClass">
+    <img src="@Model.Url"/>
+    <span class="presentation-view-item__slide-count">@Model.SlideIndex</span>
+</div>

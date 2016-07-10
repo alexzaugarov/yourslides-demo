@@ -4,44 +4,27 @@
 }
 @section Styles{
     <link href="@Url.Content("~/Scripts/fine-uploader/fine-uploader-new.css")" rel="stylesheet" type="text/css" />
-}
-
-@section head{
-    @Scripts.Render("~/bundles/jscolor")
-    <script>
-        window.onload = function () {
-            var uploader = new qq.FineUploader({
-                debug: true,
-                element: document.getElementById('fine-uploader'),
-                multiple: false,
-                request: {
-                    endpoint: '@Url.Action("UploadFile", "Presentation")'
-                },
-                retry: {
-                    enableAuto: false
-                },
-                validation: {
-                    acceptFiles: ".pdf",
-                    allowedExtensions: [".pdf"]
-                }
-            });
-        }
-
-    </script>
-}
-<div class="registration_form">
-    <h2 align="center">Загрузка презентации</h2>
-    <div class="notice">
-        <p>Выбирите файл с расширением .ppt и .pptx";</p>
-    </div>
-    <!-- The element where Fine Uploader will exist. -->
-    <div id="fine-uploader"></div>
-    @using(Html.BeginForm("Edit", "Presentation")) {
-        @Html.Partial("_PresentationEditInfoForm")
-    }
+    <link href="@Url.Content("~/Content/p-upload.css")" rel="stylesheet" type="text/css" />
     
+}
 
+<div class="p-upload">
+    <div class="p-upload__upload-form">
+        <div class="p-upload__hint">
+            Выбирите файл PDF (.pdf)
+        </div>
+        <!-- The element where Fine Uploader will exist. -->
+        <div class="p-upload__fine-uploader"></div>
+    </div>
+    <div class="p-upload__file-upload-progressbar ys-hide">
+        <div id="file-uploading-progress-bar-ui" class="progress-bar-container">
+            <div class="progress-bar__label"></div>
+        </div>
+        <div class="p-upload__error-message field-validation-error ys-hide"></div>
+    </div>
 </div>
+
+<script src="~/scripts/app/p-upload.js" type="text/javascript"></script>
 <script type="text/template" id="qq-template">
     <div class="qq-uploader-selector qq-upload-button-selector qq-uploader" qq-drop-area-text="Перетащите файл сюда или нажмите...">
         <div class="qq-total-progress-bar-container-selector qq-total-progress-bar-container">

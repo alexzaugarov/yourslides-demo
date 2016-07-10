@@ -1,9 +1,9 @@
-﻿using System.Reflection.Emit;
+﻿using System;
+using System.Collections.Generic;
 using Yourslides.Model.Account;
-using Yourslides.Utils.DateTimeUtils;
 
 namespace Yourslides.Model {
-    public class Presentation {
+    public class Presentation : IEntity {
         public Presentation() {
         }
 
@@ -19,18 +19,26 @@ namespace Yourslides.Model {
         /// <summary>
         /// Presentation time creation in unix timestamp
         /// </summary>
-        public int Created { get; set; }
+        public DateTime CreatedDateTime { get; set; }
         public User Owner { get; set; }
         public int LogoSlideIndex { get; set; }
         public PresentationVisibility Visibility { get; set; }
+        public PresentationStatus Status { get; set; }
         public bool CommentEnable { get; set; }
         public string Description { get; set; }
-        public string Color { get; set; }
+        public string ScreenBackgroundColor { get; set; }
+        public ICollection<Comment> Comments { get; set; }
     }
     public enum PresentationVisibility {
         All,
         Link,
         Hide,
-        Processing
+        None
+    }
+    public enum PresentationStatus {
+        Ready,
+        Processing,
+        Queue,
+        None
     }
 }

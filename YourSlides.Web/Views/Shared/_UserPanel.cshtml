@@ -1,7 +1,31 @@
-﻿@if (Request.IsAuthenticated) {
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated) {
     @Html.ActionLink("Добавить", "Upload", "Presentation", null, new { @class = "ys-button" })
     <div class="header__auth-control">
-        <a herf="@Url.Action("Signout", "Auth")" defualt-behavior>Выход</a>
+        <div class="header__user-menu-item">
+            <div class="user-menu">
+                <div class="user-menu__visible-items">
+                    <div class="user-menu__item">
+                        <span class="user-menu__user-name link-button">@User.Identity.GetUserName()</span>
+                    </div>
+                </div>
+                <div class="user-menu__hide-items">
+                    <div class="hide-items-wrapper text-small">
+                        <div class="user-menu__item">
+                            @Html.ActionLink("Мои презентации", "Index", "User", new { username = User.Identity.GetUserName() }, null)
+                        </div>
+                        <div class="user-menu__item">
+                            @Html.ActionLink("Управление презентациями", "Manager", "User")
+                        </div>
+                        <div class="user-menu__item">
+                            @Html.ActionLink("Выход", "Signout", "Auth")
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
     </div>
 } else {
     @Html.ActionLink("Вход", "Signin", "Auth", null, new { @class = "ys-button auth-controll__button-item" })

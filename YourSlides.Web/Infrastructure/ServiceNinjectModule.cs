@@ -1,4 +1,6 @@
-﻿using Ninject.Modules;
+﻿using System;
+using System.Web;
+using Ninject.Modules;
 using Ninject.Web.Common;
 using Yourslides.FileHandler.Service;
 using Yourslides.Service;
@@ -8,6 +10,7 @@ namespace YourSlides.Web.Infrastructure {
         public override void Load() {
             Bind<IFileService>().To<FileService>().InRequestScope();
             Bind<IPresentationService>().To<PresentationService>();
+            Bind<ICommentService>().To<CommentService>();
         }
     }
 }

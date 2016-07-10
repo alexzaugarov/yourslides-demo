@@ -2,10 +2,12 @@
 @{
     ViewBag.Title = "Авторизация";
 }
+
 <div class="auth-form">
     <h2>Авторизация</h2>
 
     @using (Html.BeginForm("Signin", null, FormMethod.Post, new { @class = "auth-form__form" })) {
+        @Html.ValidationSummary(true, "", new{@class="list-style-type_none"})
         @Html.EditorForModel()
         <div class="auth-form__submit">
             <button type="submit" class="ys-button">Войти</button>

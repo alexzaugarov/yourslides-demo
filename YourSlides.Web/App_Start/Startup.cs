@@ -28,6 +28,7 @@ namespace YourSlides.Web {
                 LoginPath = new PathString("/Auth/Signin"),
                 ExpireTimeSpan = TimeSpan.FromDays(365)
             });
+            app.MapSignalR();
         }
     }
 }

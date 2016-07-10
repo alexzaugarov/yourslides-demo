@@ -1,0 +1,63 @@
+﻿@using Yourslides.Model
+@{
+    var presentationUrl = Url.Action("Watch", "Presentation", new { id = "pid" }).Replace("pid", "{{Id}}");
+    var editUrl = Url.Action("Edit", "Presentation", new { id = "pid" }).Replace("pid", "{{Id}}");
+}
+<script id="presentation-preview-item-template" type="text/x-handlebars-template">
+    <div class="presentation-view-list-item">
+        <div class="presentation-view-list-item__logo">
+            <a href="@presentationUrl" target="_blank">
+                <div class="presentation-view-item__image-container presentation-view-item-list__max-height">
+                    <img class="presentation-view-item__image-small" src="{{LogoUrl160}}" />
+                    <span class="presentation-view-item__slide-count">{{SlideCount}}</span>
+                </div>
+            </a>
+            <span class="text-secondary text-italic">Логотип: слайд №{{LogoSlideIndex}}</span>
+        </div>
+        <div class="presentation-view-list-item__info">
+            <div class="presentation-view-item__title ys-ellipsis" title="{{Title}}">
+                {{#ifeq Visibility @((int) PresentationVisibility.All)}}
+                <img src="@Url.Content("~/Content/images/unlock-16.png")" title="Открытый доступ" />
+                {{/ifeq}}
+                {{#ifeq Visibility @((int) PresentationVisibility.Link)}}
+                <img src="@Url.Content("~/Content/images/link-16.png")" title="Досутп по ссылке" />
+                {{/ifeq}}
+                {{#ifeq Visibility @((int) PresentationVisibility.Hide)}}
+                <img src="@Url.Content("~/Content/images/lock-7-16.png")" title="Закрытый доступ" />
+                {{/ifeq}}
+                <a href="@presentationUrl" target="_blank">
+                    {{Title}}
+                </a>
+            </div>
+            <div class="presentation-view-item__info">
+                {{#ifeq Status @((int)PresentationStatus.Ready)}}{{/ifeq}}
+                {{#ifeq Status @((int)PresentationStatus.Queue)}}в очереди на обработку{{/ifeq}}
+                {{#ifeq Status @((int)PresentationStatus.Processing)}}идет обработка...{{/ifeq}}
+                <div class="presentation-view-item__watch-count">
+                    Просмотров {{WatchCount}}
+                </div>
+                <div class="presentation-view-item__created" data-datetime="{{Created}}" data-datetime-format="full">
+                    {{#formatDatetime Created "full"}}{{formattedDate}}{{/formatDatetime}}
+                </div>
+            </div>
+
+        </div>
+        <div class="presentation-view-list-item__actions">
+            <a href="@editUrl" class="action-item link-button">Редактировать</a>
+            <span class="action-delete action-item link-button">Удалить</span>
+            <div class="delete__confirm-container ys-hide">
+                <div class="text-italic text-small">Подтвердить</div>
+                <span class="delete-confirm link-button" data-presentation-id="{{Id}}">Да</span>
+                <span class="delete-deny link-button">Нет</span>
+
+            </div>
+            <div class="delete__progress ys-hide">
+                <img src="@Url.Content("~/Content/images/progress.gif")" />
+                Выполняется...
+            </div>
+            <div class="delete__error field-validation-error ys-hide">
+                Произошла ошибка
+            </div>
+        </div>
+    </div>
+</script>

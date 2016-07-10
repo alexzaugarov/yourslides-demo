@@ -1,108 +1,109 @@
-﻿@using Yourslides.Utils.DateTimeUtils
-@model YourSlides.Web.Models.PresentationViewModel
+﻿@using Yourslides.Model
+@model YourSlides.Web.Models.WatchPageViewModel
 
-@{
-    ViewBag.Title = @Model.Title + " - Yourslides";
-}
+
 @section Styles {
     <link href="~/Content/presentation_watch.css" rel="stylesheet" type="text/css">
 }
-<div class="player">
-    @Html.Partial("_Player")
-</div>
-<div class="info">
-    <div class="info__title" title="@Model.Title">
-        <h2>@Model.Title</h2>
+@if (Model.Presentation == null) {
+    @Html.Partial("Errors/_Error", "Запрашиваемая презентация не найдена")
+} else if (Model.Presentation.Status != PresentationStatus.Ready) {
+    ViewBag.Title = Model.Presentation.Title + " - Yourslides";
+    @Html.Partial("Errors/_Error", "Презентация еще обрабатывается")
+} else {
+    var presentation = Model.Presentation;
+    ViewBag.Title = presentation.Title + " - Yourslides";
+    <div class="player">
+        @Html.Partial("_Player", presentation)
     </div>
-    <div class="info__common">
-        <div class="info__watch-count">
-            Просмотров @Model.WatchCount
+    <div class="info">
+        <div class="info__title" title="@presentation.Title">
+            <h2>
+                @Html.Partial("Helpers/VisibilityIcon", Model.Presentation.Visibility)
+                @presentation.Title
+            </h2>
         </div>
-        <div class="info__author-and-date">
-            Автор: <a href="/user/@Model.OwnerName">@Model.OwnerName</a><br>
-            Добавлено: <span data-p-created="@Model.Created"></span>
+        <div class="info__common">
+            <div class="info__watch-count">
+                Просмотров @presentation.WatchCount
+            </div>
+            <div class="info__author-and-date">
+                Автор: @Html.ActionLink(presentation.OwnerName, "Index", "User", new { username = presentation.OwnerName }, null)<br>
+                Добавлено: <span data-datetime="@presentation.Created" data-datetime-format="timespan"></span>
+            </div>
         </div>
-    </div>
-    <div class="info__action">
-        <div class="info__buttons">
-            <a href="#" id="show-description-button">Описание</a>
-            <a href="#" id="show-embed-button">Код вставки</a>
-        </div>
-        <div class="info__description">
-            @Model.Description
-        </div>
-        <div class="info__embed">
-            <textarea rows="2" class="info__embed-textbox"><iframe width="640" height="390" src="@Request.Url.Host/embed/@Model.Id" frameborder="0" allowfullscreen></iframe></textarea>
-        </div>
-    </div>
-</div>
-<div class="p-watch__footer">
-    <div class="p-watch__comments comments">
-        @if (Model.CommentEnable) {
-            <h2>Комментарии</h2>
-            <div class="comments__post">
-                @if (Request.IsAuthenticated) {
-                    <form action="/api/comment" method="POST" id="comments__post-form">
-                        <input type="hidden" name="presentationid" value="@Model.Id" />
-                        <textarea id="comment-input-field" rows="2" class="comments__input-field" name="commenttext" placeholder="Оставить комментарий"></textarea>
-                        <span class="comments__post-button-container ys-hide">
-                            <button id="post-comment-button" type="submit" class="ys-button">Отправить</button>
-                        </span>
-                        <span id="status"></span>
-                    </form>
-
-
+        <div class="info__action">
+            <div class="info__buttons">
+                <span id="show-description-button" class="link-button link-selected">Описание</span>
+                <span id="show-embed-button" class="link-button">Код вставки</span>
+            </div>
+            <div class="info__description">
+                @if (presentation.Description != null) {
+                    <div class="info__description-content">
+                        @presentation.Description
+                    </div>
                 } else {
-                    <p>Комментарии могут оставлять только зарегистрированные пользователи</p>
+                    <div class="info__description-empty text-italic">
+                        Описание отсутствует
+                    </div>
                 }
             </div>
-            <div class="comments__container">
-                <div class="comment-item">
-                    <div class="comment-item__author">
-                        <a href="/user/@Model.OwnerName">@Model.OwnerName</a>
-                    </div>
-                    <div class="comment-item__date" data-comment-post-date="@UnixTime.Now"></div>
-                    <div class="comment-item__content">
-                        Текст комментария
-                    </div>
-                </div>
-                <div class="comment-item">
-                    <div class="comment-item__author">
-                        <a href="/user/@Model.OwnerName">@Model.OwnerName</a>
-                    </div>
-                    <div class="comment-item__date" data-comment-post-date="@UnixTime.Now"></div>
-                    <div class="comment-item__content">
-                        Текст комментария
-                    </div>
-                </div>
-                <div class="comment-item">
-                    <div class="comment-item__author">
-                        <a href="/user/@Model.OwnerName">@Model.OwnerName</a>
-                    </div>
-                    <div class="comment-item__date" data-comment-post-date="@UnixTime.Now"></div>
-                    <div class="comment-item__content">
-                        Текст комментария
-                    </div>
-                </div>
-                <div class="comment-item">
-                    <div class="comment-item__author">
-                        <a href="/user/@Model.OwnerName">@Model.OwnerName</a>
-                    </div>
-                    <div class="comment-item__date" data-comment-post-date="@UnixTime.Now"></div>
-                    <div class="comment-item__content">
-                        Текст комментария
-                    </div>
-                </div>
+            <div class="info__embed ys-hide">
+                <textarea rows="2" class="info__embed-textbox"><iframe width="640" height="390" src="@Request.Url.GetLeftPart(UriPartial.Authority)/embed/@presentation.Id" frameborder="0" allowfullscreen></iframe></textarea>
             </div>
-            <div id="loadCommentButton" align="center">
-                <button onclick="loadComments('@Model.Id', -1)">Загрузить</button>
-            </div>
-        } else {
-            <h2>Комментарии отключены</h2>
-        }
+        </div>
     </div>
-    <div class="p-watch__related-presentation">
-        @Html.Partial("_PresentationPreviewItem", Model)
+    <div class="p-watch__footer">
+        <div class="p-watch__comments comments">
+            @if (presentation.CommentEnable) {
+                <h2>Комментарии</h2>
+                <div class="comments__post">
+                    @if (Request.IsAuthenticated) {
+                        using (Html.BeginForm("comments", "api", FormMethod.Post, new {id = "comments__post-form", @class = "comments-post-form"})) {
+                            @Html.Hidden("presentationid", presentation.Id)
+                            @Html.TextArea("text", new {id = "comment-input-field", rows = "2", @class = "comments__input-field", placeholder = "Оставить комментарий", autoresize = ""})
+                            <span class="comments__post-button-container ys-hide">
+                                <button id="post-comment-button" type="submit" class="ys-button" disabled="true">Отправить</button>
+                                <span class="comments-post-form__form-submitting-progress-icon ys-hide"><img src="@Url.Content("~/Content/images/progress.gif")" /></span>
+                                <span class="comments-post-form__form-submitting-success-icon ys-hide"><img src="@Url.Content("~/Content/images/success-icon.png")"></span>
+                                <span class="comments-post-form__form-submitting-error ys-hide field-validation-error">Произошла ошибка при отправке</span>
+                            </span>
+                        }
+                    }
+                    else {
+                        @Html.Hidden("presentationid", presentation.Id)
+                        <p>@Html.ActionLink("Войдите", "Signin", "Auth") или @Html.ActionLink("зарегистрируйтесь", "Signup", "Auth"), чтобы оставить комментарий</p>
+                    }
+                </div>
+                using (Html.BeginForm("comments", "api", FormMethod.Post, new { id = "comment-form-delete", @class = "ys-hide" })) {}
+                <div id="comments__container" class="comments__container">
+                </div>
+                <div class="comments__states">
+                    <div id="state__loading" class="state-item">
+                        <img src="@Url.Content("~/Content/images/progress.gif")" />
+                        Загрузка комментариев
+                    </div>
+                    <div id="state__no" class="state-item ys-hide">
+                        Комментарии остутствуют
+                    </div>
+                    <div id="state__more" class="state-item ys-hide">
+                        Загрузить еще
+                    </div>
+                    <div id="state__complete" class=" state-item ys-hide">
+                        Все комментарии загружены
+                    </div>
+                </div>
+                <script src="~/scripts/app/p-watch-comments.js" type="text/javascript"></script>
+            } else {
+                <h3 align="center">Комментарии отключены</h3>
+            }
+        </div>
+        <div class="p-watch__related-presentation">
+            @foreach (var relatedPresentation in Model.RelatedPresentations) {
+                @Html.Partial("_PresentationPreviewItemGrid", relatedPresentation)
+            }
+        </div>
     </div>
-</div>
-<script src="~/scripts/app/p-watch.js" type="text/javascript"></script>
+    <script src="~/scripts/app/p-watch.js" type="text/javascript"></script>
+    @Html.Partial("Templates/_CommentItemTemplate")
+}

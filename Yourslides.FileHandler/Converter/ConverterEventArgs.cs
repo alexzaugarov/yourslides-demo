@@ -11,5 +11,6 @@ namespace Yourslides.FileHandler.Converter {
     }
     public class ConverterErrorEventArgs : ConverterEventArgs {
         public string Message { get; set; }
+        public string OwnerId { get; set; }
     }
 }

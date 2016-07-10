@@ -1,0 +1,33 @@
+﻿.sort-controls-container {
+    float: left;
+    width: 550px;
+}
+.user-search-input {
+    margin-left: 550px;
+}
+.user-search-input input[type="text"] {
+    line-height: 20px;
+    width: 88%;
+}
+.manager-page__filters {
+    float: left;
+    width: 200px;
+}
+.manager-page__main {
+    margin-left: 200px;
+}
+.action-item {
+    display: block;
+    line-height: 20px;
+    padding-left: 5px;
+    box-sizing: border-box;
+}
+.action-item:hover {
+    background-color: #eee;
+}
+.delete__confirm-container {
+    margin: 10px 0 0 10px;
+}
+.delete__confirm-container > span {
+    margin: 0 5px;
+}

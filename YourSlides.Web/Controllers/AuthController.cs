@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
@@ -48,7 +49,7 @@ namespace YourSlides.Web.Controllers {
                 return RedirectToAction("Index", "Home");
             }
 
-            ModelState.AddModelError("", "Invalid email or password");
+            ModelState.AddModelError("", "Неверное имя пользователя или пароль");
             return View();
         }
         [HttpPost]
@@ -63,7 +64,7 @@ namespace YourSlides.Web.Controllers {
             }
 
             var user = new User {
-                UserName = model.Login,
+                UserName = model.UserName,
                 Email = model.Email
             };
 
@@ -101,6 +102,12 @@ namespace YourSlides.Web.Controllers {
                     },
                     identity);
             }
+        }
+
+        [HttpPost]
+        public JsonResult CheckLogin(string username) {
+            var userManager = HttpContext.GetOwinContext().GetUserManager<UserManager<User>>();
+            return Json(!userManager.Users.Any(u => u.UserName.Equals(username)));
         }
     }
 }

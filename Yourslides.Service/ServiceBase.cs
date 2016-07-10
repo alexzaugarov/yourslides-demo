@@ -3,6 +3,7 @@
 namespace Yourslides.Service {
     public interface IService {
         void Save();
+        void NewContext();
     }
     public abstract class ServiceBase : IService {
         private readonly IUnitOfWork _unitOfWork;
@@ -12,6 +13,10 @@ namespace Yourslides.Service {
         }
         public virtual void Save() {
             _unitOfWork.Commit();
+        }
+
+        public void NewContext() {
+            _unitOfWork.Reset();
         }
     }
 }

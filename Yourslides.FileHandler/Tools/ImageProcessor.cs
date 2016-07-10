@@ -6,16 +6,19 @@ using System.IO;
 
 namespace Yourslides.FileHandler.Tools {
     public class ImageProcessor : IImageProcessor {
-        private readonly int[] _heights = { 720};
+        private readonly int[] _heights = { 720 };
         private string OutputDir { get; set; }
         public void Process(string filepath) {
             Console.WriteLine(filepath);
             var filename = Path.GetFileName(filepath);
-            var img = Image.FromFile(filepath);
-            foreach (var height in _heights) {
-                ResizeHeight(img, height).Save(Path.Combine(OutputDir, height.ToString(), filename), ImageFormat.Png);
+            using (var img = Image.FromFile(filepath)) {
+                foreach (var height in _heights) {
+                    ResizeHeight(img, height).SaveAndDispose(Path.Combine(OutputDir, height.ToString(), filename), ImageFormat.Png);
+                }
+                ResizeWidth(img, 160).SaveAndDispose(Path.Combine(OutputDir, "preview_small", filename), ImageFormat.Png);
+                ResizeWidth(img, 320).SaveAndDispose(Path.Combine(OutputDir, "preview_big", filename), ImageFormat.Png);
             }
-            ResizeWidth(img, 160).Save(Path.Combine(OutputDir, "preview_small", filename), ImageFormat.Png);
+
         }
 
         public void CreateSubdirectories(string outputdir) {
@@ -25,13 +28,14 @@ namespace Yourslides.FileHandler.Tools {
                 Directory.CreateDirectory(dir);
             }
             Directory.CreateDirectory(Path.Combine(OutputDir, "preview_small"));
+            Directory.CreateDirectory(Path.Combine(OutputDir, "preview_big"));
         }
         private Image ResizeHeight(Image srcImage, int height) {
             int newWidth = (int)Math.Ceiling((double)srcImage.Size.Width * height / srcImage.Size.Height);
             return Resize(srcImage, newWidth, height);
         }
         private Image ResizeWidth(Image srcImage, int width) {
-            int newHeight = (int)Math.Ceiling((double)width*srcImage.Size.Height / srcImage.Size.Width);
+            int newHeight = (int)Math.Ceiling((double)width * srcImage.Size.Height / srcImage.Size.Width);
             return Resize(srcImage, width, newHeight);
         }
 
@@ -44,6 +48,12 @@ namespace Yourslides.FileHandler.Tools {
                 gr.DrawImage(srcImage, new Rectangle(0, 0, width, height));
             }
             return newImage;
+        }
+    }
+    static class ImageExtension {
+        public static void SaveAndDispose(this Image image, string filename, ImageFormat format) {
+            image.Save(filename, format);
+            image.Dispose();
         }
     }
 }

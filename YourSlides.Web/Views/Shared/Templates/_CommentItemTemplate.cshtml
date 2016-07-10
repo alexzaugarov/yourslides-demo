@@ -1,0 +1,22 @@
+﻿@{
+    var userPageUrl = Url.Action("Index", "User", new { username = @"ownername" }).Replace("ownername", "{{OwnerName}}");
+}
+<script id="comment-item-template" type="text/x-handlebars-template">
+    <div class="comment-item">
+        <div class="comment-item__author">
+            <a href="@userPageUrl">{{OwnerName}}</a>
+            <span class="comment-item__date" data-comment-post-date="{{Created}}">{{formattedDate}}</span>
+        </div>
+        <div class="comment-item__content">
+            {{Text}}
+        </div>
+        <div class="comment-item__actions">
+            {{#if CanEdit}}
+            <span class="action-delete link-button" data-comment-id="{{Id}}">
+                @*<img src="@Url.Content("~/Content/images/delete.png")" />*@Удалить
+                <span class="error-message field-validation-error ys-hide">Произошла ошибка</span>
+            </span>
+            {{/if}}
+        </div>
+    </div>
+</script>

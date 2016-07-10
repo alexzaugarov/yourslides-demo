@@ -1,0 +1,18 @@
+﻿@model YourSlides.Web.Models.PageStatesLabel
+<div class="state-container">
+    <div id="state__loading" class="state-item ys-hide">
+        <img src="@Url.Content("~/Content/images/progress.gif")" />
+        @Model.Loading
+    </div>
+    <div id="state__more" class="state-item ys-hide">
+        @Model.More
+    </div>
+    @if (Model.IsEmptyShowed) {
+        <div id="state__empty" class="state-item ys-hide">
+            @Model.Empty
+        </div>
+    }
+    <div id="state__complete" class="state-item  ys-hide">
+        @Model.Complete
+    </div>
+</div>

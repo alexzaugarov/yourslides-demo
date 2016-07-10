@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using AutoMapper;
-using Yourslides.Model;
+using Microsoft.AspNet.Identity;
+using Yourslides.Model.Api;
+using Yourslides.Model.SelectionOptions;
 using Yourslides.Service;
-using Yourslides.Utils.DateTimeUtils;
 using YourSlides.Web.Models;
 
 namespace YourSlides.Web.Controllers {
@@ -17,10 +18,11 @@ namespace YourSlides.Web.Controllers {
         }
 
         // GET: Home
-        public ActionResult Index() {
-            var presentations = _presentationService.GetPublicPresentationsSubset(10, 0);
+        public ActionResult Index(PresentationSelectionOptions options) {
+            var presentations = _presentationService.Get(options, User.Identity.GetUserId());
             var m = new MainPageModel {
-                Presentations = _mapper.Map<IList<PresentationViewModel>>(presentations)
+                Presentations = _mapper.Map<IList<PresentationApi>>(presentations),
+                SearchOptions = options
             };
             return View(m);
         }

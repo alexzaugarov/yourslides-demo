@@ -1,3 +1,4 @@
+using System.Web.Http;
 using System.Web.Mvc;
 using YourSlides.Web.Infrastructure;
 using YourSlides.Web.Mappings;
@@ -50,6 +51,7 @@ namespace YourSlides.Web.App_Start
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
 
                 RegisterServices(kernel);
+                GlobalConfiguration.Configuration.DependencyResolver = new NinjectDependencyResolver(kernel);
                 return kernel;
             }
             catch
@@ -65,7 +67,6 @@ namespace YourSlides.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
             kernel.Load(new CommonNinjectModule());
             kernel.Load(new RepositoryNinjectModule());
             kernel.Load(new PresentationConverterNinjectModule());

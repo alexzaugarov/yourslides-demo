@@ -1,0 +1,17 @@
+﻿body,html {
+    margin: 0;
+    overflow: hidden;
+    height: 100%;
+}
+.preview-logo-container {
+    text-align: center;
+    height: 100%;
+}
+.preview-logo {
+    max-height: 100%;
+    max-width: 100%;
+}
+.embed-page__player, .player__container {
+    height: 100%;
+    width: 100%;
+}

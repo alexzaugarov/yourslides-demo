@@ -7,13 +7,35 @@
         handlebars: "lib/handlebars-latest",
         signals: "lib/signals",
         fineuploader: "fine-uploader/fine-uploader",
-        history: "lib/jquery.history",
-        controllers : "app/controllers"
+        spectrum: "lib/spectrum",
+        controllers: "app/controllers",
+        jqueryui: "lib/jquery-ui",
+        signalr: "lib/jquery.signalR-2.2.0",
+        hubs: "/signalr/hubs?",
+        imagecolorpicker: "app/myplugins/jquery.imagecolorpicker",
+        colordata: "app/myplugins/jquery.colordata",
+        validate: "lib/jquery.validate",
+        validateUnobtrusive: "lib/jquery.validate.unobtrusive",
+        onshow: "app/myplugins/jquery.onshow",
+        thumbnailviewer: "app/app-lib/thumbnailViewer",
+        viewer: "app/app-lib/viewer",
+        lazyviewcontainer: "app/app-lib/lazy.view.container",
+        common: "app/common",
+        sortcontrols: "app/ui/sort-controls",
+        presentationloadform: "app/ui/presentation-load-form"
     },
     shim: {
-        templates: ["handlebars"],
         crossroads: ["signals"],
-        history: ["jquery"]
+        "lib/jquery.spectrum-ru": ["jquery", "spectrum"],
+        spectrum: ["jquery"],
+        signalr: ["jquery"],
+        jqueryui: ["jquery"],
+        hubs: ["jquery", "signalr"],
+        imagecolorpicker: ["jquery", "colordata"],
+        colordata: ["jquery"],
+        validate: ["jquery"],
+        validateUnobtrusive: ["validate"],
+        onshow: ["jquery"]
     },
     bundles: Yourslides.RequirejsBundlesConfig
 });

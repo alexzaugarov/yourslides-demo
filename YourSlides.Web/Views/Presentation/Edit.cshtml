@@ -1,0 +1,165 @@
+﻿@using Yourslides.Model
+@using YourSlides.Web.Views
+@model Yourslides.Model.Api.PresentationApi
+@section Styles{
+    <link href="@Url.Content("~/Content/p-info-edit-form.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/spectrum.css")" rel="stylesheet" type="text/css" />
+}
+@if (Model == null) {
+    @Html.Partial("Errors/_Error", "Запрашиваемая презентация недоступна для редактирования")
+} else {
+    ViewBag.Title = Model.Title + " - Редактирование - Yourslides";
+    var visibility = new Dictionary<string, PresentationVisibility> {
+        {"Открытый доступ", PresentationVisibility.All},
+        {"Доступ по ссылке", PresentationVisibility.Link},
+        {"Закрытый доступ", PresentationVisibility.Hide}
+    };
+    var status = new Dictionary<PresentationStatus, string> {
+        {PresentationStatus.Ready, "обработка завершена"},
+        {PresentationStatus.Queue, "в очереди на обработку"},
+        {PresentationStatus.Processing,  "идет обработка..."}
+    };
+    var url = Url.Action("Watch", "Presentation", new { Model.Id });
+    var statusClass = "edit-info-form__processing-status_theme_in-progress";
+    var hideProgressText = "";
+    switch (Model.Status) {
+        case PresentationStatus.Ready:
+            statusClass = "edit-info-form__processing-status_theme_success";
+            hideProgressText = "ys-hide";
+            break;
+    }
+    <div class="edit-page__head">
+        @Html.ActionLink("Управление презентациями", "Manager", "User")
+        <span class="edit-page__head-splitter">/</span>
+        <span class="text-italic">@Model.Title</span>
+
+    </div>
+    <div class="edit-info-form">
+        <div class="edit-info-form__head">
+            <div class="edit-info-form__preview">
+                <div class="edit-info-form__preview-tools image-tools">
+                    <div class="image-tools__item image-tools__pallete-color">
+                        <input type="text" id="spectrum" value="@Model.ScreenBackgroundColor" />
+                    </div>
+                </div>
+
+
+                <div class="edit-info-form__title-slide-wrap">
+                    <div class="edit-info-form__preview-monitor-container ys-round-border">
+                        <div class="edit-info-form__title-slide-container" style="background: @Model.ScreenBackgroundColor">
+                            <img class="edit-info-form__title-slide-img" src="@Model.LogoUrl320">
+                        </div>
+                    </div>
+                </div>
+                <div class="edit-info-form__slide-title-label">
+                    <i>Логотип для презентации (слайд <span id="slide-index-label">@Model.LogoSlideIndex</span>)</i>
+                </div>
+            </div>
+            <div class="edit-info-form__processing-info">
+                <div class="edit-info-form__file-processing-progress-bar">
+                    <div id="file-processing-progress-bar-ui" class="progress-bar-container">
+                        <div class="progress-bar__label"></div>
+                    </div>
+                </div>
+                <div class="edit-info-form__summary-info">
+                    <div class="edit-info-form__summary-info-item edit-info-form__processing-status @statusClass">
+                        <label class="edit-info-form__summary-info-label ">Статус: </label>
+                        <span id="current-status-text">@status[Model.Status]</span>
+                    </div>
+                    <div class="edit-info-form__summary-info-item edit-info-form__processing-progress @hideProgressText">
+                        <label class="edit-info-form__summary-info-label">Прогресс: </label>
+                        <span id="current-progress-text"></span>
+                    </div>
+                    <div class="edit-info-form__summary-info-item edit-info-form__presentation-url">
+                        <label class="edit-info-form__summary-info-label">Ссылка на презентацию: </label>
+                        <span id="presetation-url"><a href="@url" target="_blank">@Html.UrlWithHost(url)</a></span>
+                    </div>
+                    <div class="edit-info-form__summary-info-item edit-info-form__presentation-datetime-creation">
+                        <label class="edit-info-form__summary-info-label">Дата создания: </label>
+                        <span data-datetime="@Model.Created" data-datetime-format="full"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ys-clearfix"></div>
+        @using (Html.BeginForm("presentations", "api", FormMethod.Post, new { @class = "edit-info-form__form", id = "edit-form" })) {
+            <div class="edit-info-form__main">
+                <div class="edit-info-form__form-item">
+                    <label class="edit-info-form__label">Название</label>
+                    @Html.TextAreaFor(p => p.Title, new { @class = "edit-info-form__text-input", autoresize = "", rows = "1", placeholder = "Максимум 100 символов" })
+                    @Html.ValidationMessageFor(p => p.Title)
+                </div>
+                <div class="edit-info-form__form-item">
+                    <label class="edit-info-form__label">Описание</label>
+                    @Html.TextAreaFor(p => p.Description, new { @class = "edit-info-form__text-input", autoresize = "", rows = "5", placeholder = "Максимум 1000 символов" })
+                    @Html.ValidationMessageFor(p => p.Description)
+                </div>
+            </div>
+            <div class="edit-info-form__advanced">
+                <div class="edit-info-form__form-item">
+                    <label class="edit-info-form__label">Доступ к презентации</label>
+                    <div class="edit-info-form__group">
+                        @foreach (var v in visibility) {
+                            <div class="edit-info-form__group-item">
+                                <label>
+                                    @Html.RadioButton("Visibility", v.Value, Model.Visibility == v.Value) @v.Key
+                                </label>
+                            </div>
+                        }
+                    </div>
+
+                </div>
+                <div class="edit-info-form__form-item">
+                    <label class="edit-info-form__label">Дополнительно</label>
+                    <div class="edit-info-form__group">
+                        <div class="edit-info-form__group-item">
+                            <label>
+                                <span class="edit-info-form__inline-label">
+                                    Включить комментарии
+                                </span>
+                                @Html.CheckBoxFor(p => p.CommentEnable)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="edit-info-form__submint-container">
+                    <span>@Html.ActionLink("Перейти к моим презентациям", "Presentations", "User", null, new { @class = "ys-hide edit-info-form__form-submitting-back-anchor" })</span>
+                    <span class="edit-info-form__form-submitting-progress-icon ys-hide"><img src="@Url.Content("~/Content/images/progress.gif")" /></span>
+                    <span class="edit-info-form__form-submitting-success-icon ys-hide"><img src="@Url.Content("~/Content/images/success-icon.png")"></span>
+                    <span class="edit-info-form__form-submitting-error ys-hide field-validation-error">Произошла ошибка при сохранении</span>
+                    <button type="submit" class="ys-button" id="edit-form__submit-button" disabled="disabled">Сохранить</button>
+                </div>
+            </div>
+            @Html.HiddenFor(p => p.Id)
+            @Html.HiddenFor(p => p.LogoSlideIndex)
+            @Html.Hidden("Status", ((int)Model.Status).ToString())
+            @Html.HiddenFor(p => p.ScreenBackgroundColor)
+        }
+        @Html.HiddenFor(p => p.SlideCount)
+    </div>
+    <div class="ys-clearfix"></div>
+    <div class="thumbnail-slide-container">
+        <h3>Вы можете выбрать в качестве логотипа другой слайд</h3>
+        @*@if (Model.Status == PresentationStatus.Ready) {
+                for (int i = 1; i < Model.SlideCount; i++) {
+                    var thumbnail = new ThumbnailItem {
+                        SlideIndex = i,
+                        Url = Url.Content("~/storage/" + Model.Id + "/preview_big/" + i + ".png"),
+                        SelectedClass = ""
+                    };
+                    if (i == Model.LogoSlideIndex) {
+                        thumbnail.SelectedClass = "thumbnail-item_selected";
+                    }
+                    @Html.Partial("_SlideThumbnail", thumbnail)
+                }
+            }*@
+    </div>
+
+    <script src="~/scripts/app/p-edit.js" type="text/javascript"></script>
+    <script id="thumbnail-item-template" type="text/x-handlebars-template">
+        <div data-slide-index="{{index}}" class="thumbnail-item {{selectedClass}}">
+            <img src="{{url}}" />
+            <span class="presentation-view-item__slide-count">{{index}}</span>
+        </div>
+    </script>
+}

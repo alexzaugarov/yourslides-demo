@@ -1,0 +1,32 @@
+﻿@{
+    var presentationUrl = Url.Action("Watch", "Presentation", new { id = "pid" }).Replace("pid", "{{Id}}");
+    var editUrl = Url.Action("Edit", "Presentation", new { id = "pid" }).Replace("pid", "{{Id}}");
+    var userPageUrl = Url.Action("Index", "User", new { username = @"ownername" }).Replace("ownername", "{{OwnerName}}");
+}
+<script id="presentation-preview-item-template" type="text/x-handlebars-template">
+    <div class="presentation-view-item presentation-view-item_size_small" data-id="{{Id}}">
+        <div class="presentation-view-item__icon ">
+            <a class="presentation-view-item__link" href="@presentationUrl">
+                <div class="presentation-view-item__image-container">
+                    <img class="presentation-view-item__image-small" src="{{LogoUrl160}}" />
+                    <img class="presentation-view-item__image-big" src="{{LogoUrl320}}" />
+                    <span class="presentation-view-item__slide-count">{{SlideCount}}</span>
+                </div>
+                <div class="presentation-view-item__title ys-ellipsis" title="{{Title}}">
+                    {{Title}}
+                </div>
+            </a>
+            {{#if CanEdit}}
+            <a class="presentation-view-item__edit-link" href="@editUrl"><img src="@Url.Content("/Content/images/edit.jpg")" /></a>
+            {{/if}}
+
+        </div>
+        <div class="presentation-view-item__info">
+            <a class="presentation-view-item__owner-name" href="@userPageUrl">{{OwnerName}}</a>
+            <div class="presentation-view-item__watch-count">Просмотров {{WatchCount}}</div>
+            <div class="presentation-view-item__created" data-datetime="{{Created}}" data-datetime-format="timespan" title="{{#formatDatetime Created "full"}}{{formattedDate}}{{/formatDatetime}}">
+                {{#formatDatetime Created "timespan"}}{{formattedDate}}{{/formatDatetime}}
+            </div>
+        </div>
+    </div>
+</script>

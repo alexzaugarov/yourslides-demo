@@ -1,0 +1,6 @@
+﻿@model IEnumerable<Yourslides.Model.Api.PresentationApi>
+<div id="presentations-container" class="presentations-container" data-total-page-length="15" data-current-page-length="@Model.Count()">
+    @foreach (var presentation in Model) {
+        @Html.Partial("_PresentationPreviewItemGrid", presentation)
+    }
+</div>

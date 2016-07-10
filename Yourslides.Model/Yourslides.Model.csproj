@@ -58,8 +58,16 @@
   <ItemGroup>
     <Compile Include="Account\Role.cs" />
     <Compile Include="Account\User.cs" />
+    <Compile Include="Api\CommentApi.cs" />
+    <Compile Include="Api\PresentationApi.cs" />
+    <Compile Include="Comment.cs" />
+    <Compile Include="IEntity.cs" />
     <Compile Include="Presentation.cs" />
+    <Compile Include="PresentationWatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SelectionOptions\CommentsSelectionOptions.cs" />
+    <Compile Include="SelectionOptions\PresentationSelectionOptions.cs" />
+    <Compile Include="SelectionOptions\SelectionOptionsBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

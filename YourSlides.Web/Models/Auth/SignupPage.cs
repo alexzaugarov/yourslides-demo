@@ -1,28 +1,32 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace YourSlides.Web.Models.Auth {
     public class SignupPage {
-        [Required]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Обязательное поле")]
         [DataType(DataType.Text)]
-        [DisplayName("Логин")]
-        public string Login { get; set; }
+        [DisplayName("Имя пользователя")]
+        [StringLength(30, ErrorMessage = "Имя пользователя должно содержать от 5 до 30 символов", MinimumLength = 5)]
+        [Remote("CheckLogin", "Auth", HttpMethod = "POST", ErrorMessage = "Имя пользователя уже используется")]
+        [RegularExpression("^[a-zA-Z0-9]*$", ErrorMessage = "Имя пользователя может содержать только латинские буквы и цифры")]
+        public string UserName { get; set; }
 
-        [Required]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Обязательное поле")]
         [DataType(DataType.Password)]
         [DisplayName("Пароль")]
-        public string Password { get; set; } 
+        [StringLength(int.MaxValue, MinimumLength = 6, ErrorMessage = "Пароль должен содержать 6 и более символов")]
+        public string Password { get; set; }
 
-        [Required]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Обязательное поле")]
         [DataType(DataType.Password)]
         [DisplayName("Еще раз пароль")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Пароли должны совпадать")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Обязательное поле")]
         [DataType(DataType.EmailAddress)]
-        [DisplayName("Почтовый адрес")]
+        [DisplayName("Электронная почта")]
         public string Email { get; set; }
-
-
     }
 }

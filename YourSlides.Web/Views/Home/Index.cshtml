@@ -1,11 +1,35 @@
-﻿@model YourSlides.Web.Models.MainPageModel
+﻿@using Ghostscript.NET
+@using YourSlides.Web.Models
+@model YourSlides.Web.Models.MainPageModel
+@section head{
+    <link href="@Url.Content("~/Content/h-index.css")" rel="stylesheet" type="text/css" />
+}
 @{
     ViewBag.Title = "YourSlides - делитесь презентациями";
 }
-
 <h2>Все презентации</h2>
-<div class="presentation-views-list">
-    @foreach (var presentation in Model.Presentations) {
-        @Html.Partial("_PresentationPreviewItem", presentation)
+<div class="home-page">
+    @if (Model.Presentations.Any()) {
+        <div class="home-page__controls">
+            @using (Html.BeginForm("presentations", "api", FormMethod.Get, new{id="presentation-load-form"})) {
+                @Html.Partial("_SortControls", Model.SearchOptions)
+            }
+        </div>
+        @Html.Partial("_PresentationList", Model.Presentations)
+        @Html.Partial("_StatesContainer", new PageStatesLabel { IsEmptyShowed = false })
+    } else if (!String.IsNullOrEmpty(Model.SearchOptions.SearchString)) {
+        <div id="state__empty-searchstring" class="state-item">
+            По запросу "@Model.SearchOptions.SearchString" ничего не найдено
+        </div>
     }
+    
 </div>
+
+<script src="@Url.Content("~/scripts/app/p-index.js")" type="text/javascript"></script>
+<script>
+    //window.onload(function () {
+    document.getElementsByName("searchstring")[0].value = "@Model.SearchOptions.SearchString";
+    //});
+
+</script>
+@Html.Partial("Templates/_PresentationPreviewItemTemplate")

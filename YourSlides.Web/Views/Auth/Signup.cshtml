@@ -3,10 +3,16 @@
 @{
     ViewBag.Title = "Регистрация";
 }
+@section head {
+    <script>
+        requirejs(["jquery", "validate", "validateUnobtrusive"]);
+    </script>
+}
 <div class="auth-form">
     <h2>Регистрация</h2>
 
     @using (Html.BeginForm("Signup", null, FormMethod.Post, new { @class = "registration-form" })) {
+        @Html.ValidationSummary(true, "", new { @class = "list-style-type_none" })
         @Html.EditorForModel()
         <div class="auth-form__submit">
             <button type="submit" class="ys-button"> Зарегистрироваться</button>

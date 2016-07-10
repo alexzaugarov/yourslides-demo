@@ -1,0 +1,36 @@
+﻿@model YourSlides.Web.Models.WatchPageViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    @if (Model.Presentation == null) {
+        <title>Презентация не найдена</title>
+    } else {
+        <title>@Model.Presentation.Title - Yourslides</title>
+        <style>
+        body {
+            background-color: @Model.Presentation.ScreenBackgroundColor;
+        }
+        </style>
+    }
+    <meta content="text/html; charset=utf-8">
+    <link href="@Url.Content("~/Content/p-embed.css")" rel="stylesheet" />
+</head>
+<body>
+    @if (Model.Presentation != null) {
+        @*<div class="preview-logo-container">
+            <img class="preview-logo" src="@Model.Presentation.LogoUrl720p" />
+        </div>*@
+        <div class="embed-page__player">
+            @Html.Partial("_Player", Model.Presentation)
+        </div>
+    }
+
+</body>
+</html>

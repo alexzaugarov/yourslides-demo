@@ -1,0 +1,114 @@
+﻿@using Yourslides.Model
+@using YourSlides.Web.Models
+@model YourSlides.Web.Models.ManagerPageViewModel
+
+@{
+    ViewBag.Title = "Управление презентациями - Yourslides";
+}
+@section head {
+    <link href="@Url.Content("~/Content/user-page.css")" rel="stylesheet" type="text/css" />
+}
+@helper RenderVisibilityStatsItem(string labelText, PresentationVisibility visibility, IDictionary<PresentationVisibility, int> stats) {
+    if (visibility == PresentationVisibility.None) {
+        <span class="link-button" data-visibility="@visibility">@labelText (@stats.Sum(p => p.Value))</span>
+    }else if (stats.ContainsKey(visibility)) {
+        <span class="link-button" data-visibility="@visibility">@labelText (@stats[visibility])</span>
+    } else {
+        <span class="link-button" data-visibility="@visibility">@labelText (0)</span>
+    }
+}
+@helper RenderStatusStatsItem(string labelText, PresentationStatus status, IDictionary<PresentationStatus, int> stats) {
+    if (status == PresentationStatus.None) {
+        <span class="link-button" data-status="@status">@labelText (@stats.Sum(p => p.Value))</span>
+    } else if (stats.ContainsKey(status)) {
+        <span class="link-button" data-status="@status">@labelText (@stats[status])</span>
+    } else {
+        <span class="link-button" data-status="@status">@labelText (0)</span>
+    }
+}
+<div class="manager-page">
+
+    <h2>Управление презентациями</h2>
+    @if (Model.Presentations.Any()) {
+        <div class="manager-page__filters">
+            <div class="manager-page__reset-button center">
+                <span id="presetation-load-form-reset" class="ys-button">Сбросить</span>
+            </div>
+            <ul class="filters">
+                <li>
+                    Доступ
+                    <ul class="filter__visibility">
+                        <li>
+                            @RenderVisibilityStatsItem("любой", PresentationVisibility.None, Model.VisibilityStats)
+                        </li>
+                        <li>
+                            @RenderVisibilityStatsItem("открытый", PresentationVisibility.All, Model.VisibilityStats)
+                        </li>
+                        <li>
+                            @RenderVisibilityStatsItem("по ссылке", PresentationVisibility.Link, Model.VisibilityStats)
+                        </li>
+                        <li>
+                            @RenderVisibilityStatsItem("закрытый", PresentationVisibility.Hide, Model.VisibilityStats)
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    Обработка
+                    <ul class="filter__status">
+                        <li>
+                            @RenderStatusStatsItem("все", PresentationStatus.None, Model.StatusStats)
+                        </li>
+                        <li>
+                            @RenderStatusStatsItem("завершено", PresentationStatus.Ready, Model.StatusStats)
+                        </li>
+                        <li>
+                            @RenderStatusStatsItem("в очереди", PresentationStatus.Queue, Model.StatusStats)
+                        </li>
+                        <li>
+                            @RenderStatusStatsItem("выполняется", PresentationStatus.Processing, Model.StatusStats)
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="manager-page__main">
+            <div class="manager-page__controls">
+                @using (Html.BeginForm("presentations", "api", FormMethod.Get, new { id = "presentation-load-form" })) {
+                    @Html.Partial("_SortControlsWithSearchInput", Model)
+                    <div class="manager-page__visibility-controls ys-hide">
+                        @Html.RadioButton("visibility", PresentationVisibility.None, true, new { id = "visibility-default" })
+                        @Html.RadioButton("visibility", PresentationVisibility.All)
+                        @Html.RadioButton("visibility", PresentationVisibility.Link)
+                        @Html.RadioButton("visibility", PresentationVisibility.Hide)
+                    </div>
+                    <div class="manager-page__status-controls ys-hide">
+                        @Html.RadioButton("status", PresentationStatus.None, true, new { id = "status-default" })
+                        @Html.RadioButton("status", PresentationStatus.Ready)
+                        @Html.RadioButton("status", PresentationStatus.Processing)
+                        @Html.RadioButton("status", PresentationStatus.Queue)
+                    </div>
+                }
+            </div>
+            <div id="presentations-container" class="presentations-list-container" data-total-page-length="10" data-current-page-length="@Model.Presentations.Count()">
+                @foreach (var p in Model.Presentations) {
+                    @Html.Partial("_PresentationPreviewItemList", p)
+                }
+            </div>
+            <div class="manager-page__states-container">
+                @Html.Partial("_StatesContainer", new PageStatesLabel())
+            </div>
+        </div>
+        using (Html.BeginForm("presentations", "api", FormMethod.Post, new { @class = "ys-hide", id = "form-delete" })) {
+        }
+        <script src="@Url.Content("~/scripts/app/u-index.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/scripts/app/u-manager.js")" type="text/javascript"></script>
+    } else {
+        <div class="state-item">
+            Вы еще не загрузили ни одной презентации.
+        </div>
+        <div class="state-item">
+            @Html.ActionLink("Загрузить", "Upload", "Presentation", null, new { @class = "manager-page__upload-link" })
+        </div>
+    }
+</div>
+@Html.Partial("Templates/_PresentationPreviewItemListTemplate")

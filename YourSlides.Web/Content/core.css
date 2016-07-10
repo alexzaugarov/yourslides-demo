@@ -1,7 +1,13 @@
-﻿html, body {
+﻿* {
+    outline: none;
+}
+html, body {
     height: 100%;
     font-size: 14px;
     word-wrap: break-word;
+}
+body {
+    overflow-y: scroll;
 }
 
 input[type="text"], input[type="password"], input[type="email"], textarea {
@@ -24,6 +30,25 @@ input[type="text"], input[type="password"], input[type="email"], textarea {
 textarea {
     padding: 6px;
     box-sizing: border-box;
+    resize: none;
+}
+
+.list-style-type_none ul {
+   list-style-type: none; 
+   padding-left: 10px;
+}
+.text-secondary {
+    font-size: 12px;
+    color: #9c9c9c;
+}
+.text-italic {
+    font-style: italic;
+}
+.text-small {
+    font-size: 12px;
+}
+.center {
+    text-align: center;
 }
 
 .ys-button {
@@ -50,9 +75,32 @@ textarea {
         text-decoration: none;
     }
 
-    .ys-hide {
-        display: none;
+    .ys-button[disabled=disabled], .ys-button:disabled {
+        background: #bbb;
+        border-color: white;
     }
+
+.ys-hide {
+    display: none;
+}
+.ys-invisible {
+    visibility: hidden;
+}
+
+.ys-ellipsis {
+    display: block; /* Fallback for non-webkit */
+    display: -webkit-box;
+    max-width: 400px;
+    max-height: 2.4em; /* Fallback for non-webkit */
+    margin: 0 auto;
+    font-size: 13px;
+    line-height: 1.2em;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .header {
     border-bottom: 1px solid #0066ff;
     height: 60px;
@@ -77,7 +125,6 @@ textarea {
 
 .header__user-panel {
     float: right;
-    width: 283px;
     height: 100%;
 }
 
@@ -121,6 +168,14 @@ textarea {
 .header__auth-control {
     display: inline-block;
     text-align: right;
+    min-width: 200px;
+    max-width: 300px;
+    font-size: 13px;
+    position: relative;
+    margin-right: 10px;
+}
+.header__user-menu-item {
+    display: inline-block;
 }
 
 .auth-controll__button-item {
@@ -136,6 +191,7 @@ textarea {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    
 }
 
 .content_main {
@@ -187,8 +243,13 @@ a {
     box-sizing: border-box;
 }
 
-.footer-clearfix {
+.ys-clearfix {
     clear: both;
+}
+
+.ys-round-border {
+    border: 1px solid #06f;
+    border-radius: 4px;
 }
 
 .hint, .date {
@@ -239,9 +300,9 @@ img {
         color: rgba(226, 19, 0, 0.98);
     }
 
-.selected-link {
+/*.selected-link {
     text-decoration: underline;
-}
+}*/
 
 .sort-panel {
     width: 750px;
@@ -273,3 +334,97 @@ img {
         color: red;
         border-color: red;
     }
+
+.progress-bar-container {
+    position: relative;
+}
+
+.progress-bar__label {
+    font-size: 13px;
+    font-weight: normal;
+    line-height: 28px;
+    text-align: center;
+    width: 100%;
+    position: absolute;
+}
+.inline-control-item {
+    display: inline-block;
+    margin: 0 5px;
+}
+.link-button {
+    font-weight: normal;
+    color: #06f;
+}
+.link-button:hover {
+    color: red;
+    text-decoration: none;
+    cursor: pointer;
+}
+.link-selected {
+    color: black;
+}
+.state-item {
+    text-align: center;
+    line-height: 40px;
+    color: #aaa;
+}
+.presentations-container {
+    margin: auto;
+    width: 900px;
+}
+.sort-type-ascending::after, .sort-type-descending::after {
+    padding-left: 3px;
+}
+.sort-type-ascending::after {
+    content: "\2191";
+}
+.sort-type-descending::after {
+    content: "\2193";
+}
+.back-to-top-button {
+    display: none;
+    width: 60px;
+    height: 60px;
+    position: fixed;
+    bottom: 70px;
+    right: 20px;
+    z-index: 999;
+    -webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+    border-radius: 30px;
+    cursor: pointer;
+}
+.user-menu{
+    position: relative;
+}
+.user-menu:hover {
+    width: 200px;
+}
+.user-menu__item a {
+    display: block;
+    line-height: 20px;
+}
+.user-menu__item a:hover {
+    background-color: #eee;
+}
+.user-menu__hide-items {
+    display: none;
+    width: 200px;
+    position: absolute;
+    right: 0;
+    z-index: 9999;
+}
+.hide-items-wrapper {
+    background-color: white;
+    border: 1px solid #06f;
+    border-radius: 5px;
+    padding: 5px;
+}
+.user-menu:hover .user-menu__hide-items {
+    display: block;
+}
+.user-menu__user-name {
+    color: #06f;
+    line-height: 30px;
+}

@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.Linq;
 using Yourslides.FileHandler.Converter;
 using Yourslides.Model;
+using Yourslides.Model.Api;
 using Yourslides.Utils.Web;
 
 namespace Yourslides.FileHandler.Service {
@@ -39,6 +41,10 @@ namespace Yourslides.FileHandler.Service {
         public string GetSlide(long presentationId, int slideIndex, string quality) {
             string baseDir = Path.Combine(ConfigurationManager.AppSettings["PresentationStorageLocation"], presentationId.ToString());
             return quality == null ? Path.Combine(baseDir, slideIndex + ".png") : Path.Combine(baseDir, quality, slideIndex + ".png");
+        }
+
+        public void DeleteDirectory(string id) {
+            Directory.Delete(Path.Combine(ConfigurationManager.AppSettings["PresentationStorageLocation"], id), true);
         }
     }
 }

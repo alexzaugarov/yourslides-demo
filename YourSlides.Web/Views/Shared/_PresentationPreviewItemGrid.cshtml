@@ -1,0 +1,25 @@
+﻿@model Yourslides.Model.Api.PresentationApi
+
+<div class="presentation-view-item presentation-view-item_size_small" data-id="@Model.Id">
+    <div class="presentation-view-item__icon ">
+        <a class="presentation-view-item__link" href="@Url.Action("Watch", "Presentation", new {id = Model.Id})">
+            <div class="presentation-view-item__image-container">
+                <img class="presentation-view-item__image-small" src="@Model.LogoUrl160"/>
+                <img class="presentation-view-item__image-big" src="@Model.LogoUrl320"/>
+                <span class="presentation-view-item__slide-count">@Model.SlideCount</span>
+            </div>
+            <div class="presentation-view-item__title ys-ellipsis" title="@Model.Title">
+                @Model.Title
+            </div>
+        </a>
+        @if (Model.CanEdit) {
+            <a class="presentation-view-item__edit-link" href="@Url.Action("Edit", "Presentation", new{id = Model.Id})"><img src="@Url.Content("~/Content/images/edit.jpg")" /></a>
+        }
+        
+    </div>
+    <div class="presentation-view-item__info">
+        <a class="presentation-view-item__owner-name" href="@Url.Action("Index", "User", new { username = @Model.OwnerName })">@Model.OwnerName</a>
+        <div class="presentation-view-item__watch-count">Просмотров @Model.WatchCount</div>
+        <div class="presentation-view-item__created" data-datetime="@Model.Created" data-datetime-format="timespan"></div>
+    </div>
+</div>

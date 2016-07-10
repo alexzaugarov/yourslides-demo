@@ -1,48 +1,109 @@
 ﻿@using Yourslides.Model
-@model Yourslides.Model.Presentation
+@model Yourslides.Model.Api.PresentationApi
 @{
     var visibility = new Dictionary<string, PresentationVisibility> {
         {"Открытый доступ", PresentationVisibility.All},
         {"Доступ по ссылке", PresentationVisibility.Link},
         {"Закрытый доступ", PresentationVisibility.Hide}
     };
+    var status = new Dictionary<PresentationStatus, string> {
+        {PresentationStatus.Ready, "обработка завершена"},
+        {PresentationStatus.Processing,  "идет обработка..."},
+        {PresentationStatus.Banned, "заблокирована"}
+    };
+    var url = Url.Action("Watch", "Presentations", new{Id = Model.Id});
 }
-<div class="edit-info-form edit-info-form_hide">
+<div class="edit-info-form">
+    <div class="edit-info-form__head">
+        <div class="edit-info-form__preview">
+            <div class="edit-info-form__preview-tools image-tools">
+                <div class="image-tools__item image-tools__pallete-color">
+                    <input type="text" id="spectrum" value="@Model.ScreenBackgroundColor" />
+                </div>
+                <div id="color-picker" class="image-tools__item image-tools__color-picker">
+                    <img src="@Url.Content("~/Content/images/eyedropper-24.png")" />
+                </div>
+            </div>
+
+
+            <div class="edit-info-form__title-slide-wrap">
+                <div class="edit-info-form__preview-monitor-container ys-round-border">
+                    <div class="edit-info-form__title-slide-container" style="background: @Model.ScreenBackgroundColor">
+                        <img class="edit-info-form__title-slide-img" src="@Model.LogoUrl320">
+                    </div>
+                </div>
+            </div>
+            <div class="edit-info-form__slide-title-label">
+                <i>Логотип для презентации (слайд <span id="slide-index-label">@Model.LogoSlideIndex</span>)</i>
+            </div>
+        </div>
+        <div class="edit-info-form__processing-info">
+            <div class="edit-info-form__file-processing-progress-bar">
+                <div id="file-processing-progress-bar-ui"></div>
+            </div>
+            <div class="edit-info-form__summary-info">
+                <div class="edit-info-form__summary-info-item edit-info-form__processing-status edit-info-form__processing-status_theme_in-progress">
+                    <label class="edit-info-form__summary-info-label ">Статус: </label>
+                    <span id="current-status-text">@status[Model.Status]</span>
+                </div>
+                <div class="edit-info-form__summary-info-item edit-info-form__processing-progress ys-hide">
+                    <label class="edit-info-form__summary-info-label">Прогресс: </label>
+                    <span id="current-progress-text"></span>
+                </div>
+                <div class="edit-info-form__summary-info-item edit-info-form__presentation-url">
+                    <label class="edit-info-form__summary-info-label">Ссылка на презентацию: </label>
+                    <span id="presentation-url"><a href="@url">@Request.Url.GetLeftPart(UriPartial.Authority)@url</a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ys-clearfix"></div>
     <div class="edit-info-form__main">
-        <div>
+        <div class="edit-info-form__form-item">
             <label class="edit-info-form__label">Название</label>
-            <textarea class="text-input" rows="2" maxlength="100" name="title" placeholder="Максимум 100 символов" required>
-                @Model.Title
-            </textarea>
+            <textarea class="edit-info-form__text-input" autoresize rows="1" maxlength="100" name="title" placeholder="Максимум 100 символов" required>@Model.Title</textarea>
         </div>
-        <div>
+        <div class="edit-info-form__form-item">
             <label class="edit-info-form__label">Описание</label>
-            <textarea class="text-input" rows="10" maxlength="1000" name="description" placeholder="Максимум 1000 символов">
-                @Model.Description
-            </textarea>
-        </div>
-        <div>
-            <label class="edit-info-form__label">Цвет фона в плеере</label>
-            <input type="jscolor" name="color" value="@Model.Color">
+            <textarea class="edit-info-form__text-input" autoresize rows="5" maxlength="1000" name="description" placeholder="Максимум 1000 символов">@Model.Description</textarea>
         </div>
     </div>
     <div class="edit-info-form__advanced">
-        <div>
-            <label class="edit-info-form__label">Доступ</label>
-            @foreach (var v in visibility) {
-                if (Model.Visibility == v.Value) {
-                    <p>@Html.RadioButton("visibility", v.Value, true) @v.Key</p>
-                } else {
-                    <p>@Html.RadioButton("visibility", v.Value) @v.Key</p>
+        <div class="edit-info-form__form-item">
+            <label class="edit-info-form__label">Доступ к презентации</label>
+            <div class="edit-info-form__group">
+                @foreach (var v in visibility) {
+                    <div class="edit-info-form__group-item">
+                        <label>
+                            if (Model.Visibility == v.Value) {
+                            @Html.RadioButton("visibility", v.Value, true) @v.Key
+                            } else {
+                            @Html.RadioButton("visibility", v.Value) @v.Key
+                            }
+                        </label>
+                    </div>
                 }
-            }
+            </div>
+
         </div>
-        <div>
-            <label class="edit-info-form__label">Комментарии</label>
-            @Html.RadioButton("commentenable", 1, Model.CommentEnable)Включить
-            @Html.RadioButton("commentenable", 1, !Model.CommentEnable)Выключить
+        <div class="edit-info-form__form-item">
+            <label class="edit-info-form__label">Дополнительно</label>
+            <div class="edit-info-form__group">
+                <div class="edit-info-form__group-item">
+                    <label>
+                        <span class="edit-info-form__inline-label">
+                            Включить комментарии
+                        </span>
+                        <input type="checkbox" name="commentenable" checked="@Model.CommentEnable">
+                    </label>
+                </div>
+            </div>
         </div>
     </div>
     @Html.HiddenFor(p => p.Id)
     @Html.HiddenFor(p => p.LogoSlideIndex)
+    @Html.HiddenFor(p => p.Status)
+    <div class="edit-info-form__submint-container">
+        <button type="submit" class="ys-button">Сохранить</button>
+    </div>
 </div>

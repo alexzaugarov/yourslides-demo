@@ -19,6 +19,13 @@
     width: 100%;
     height: 30px;
 }
-.field-validation-error {
+.field-validation-error, .validation-summary-errors {
     color: red;
+    font-size: 12px;
+}
+input[type="text"].input-validation-error,
+input[type="password"].input-validation-error,
+input[type="email"].input-validation-error,
+textarea.input-validation-error {
+    border-color: red;
 }

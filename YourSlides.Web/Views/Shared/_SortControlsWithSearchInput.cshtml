@@ -1,0 +1,12 @@
+﻿@model YourSlides.Web.Models.UserPageViewModel
+
+<div class="sort-controls-container">
+    @Html.Partial("_SortControls", Model.SearchOptions)
+    @Html.Hidden("ownerid", Model.Owner.Id)
+</div>
+<div class="user-search-input">
+    @Html.TextBox("searchstring", "", new { @class = "", placeholder = "Поиск..." })
+    <span id="state__request-in-progress" class="ys-hide">
+        <img src="@Url.Content("~/Content/images/progress.gif")" />
+    </span>
+</div>

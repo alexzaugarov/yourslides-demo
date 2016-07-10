@@ -14,7 +14,8 @@ namespace Yourslides.Data.Configuration {
             Property(p => p.Title).IsRequired().HasMaxLength(100);
             Property(p => p.Description).IsOptional().HasMaxLength(1000);
             Property(p => p.Visibility).IsRequired();
-            Property(p => p.Color).IsRequired();
+            Property(p => p.ScreenBackgroundColor).IsRequired();
+            Property(p => p.ScreenBackgroundColor).HasColumnName("Color");
         }
     }
 }

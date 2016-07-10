@@ -1,0 +1,13 @@
+﻿@using Yourslides.Model
+@model Yourslides.Model.PresentationVisibility
+@switch (Model) {
+    case PresentationVisibility.All:
+        <img src="@Url.Content("~/Content/images/unlock-16.png")" title="Открытый доступ" />
+        break;
+    case PresentationVisibility.Hide:
+        <img src="@Url.Content("~/Content/images/lock-7-16.png")" title="Закрытый доступ" />
+        break;
+    case PresentationVisibility.Link:
+        <img src="@Url.Content("~/Content/images/link-16.png")" title="Досутп по ссылке" />
+        break;
+}

@@ -1,0 +1,57 @@
+﻿@using Yourslides.Model
+@model Yourslides.Model.Api.PresentationApi
+@{
+    var status = new Dictionary<PresentationStatus, string> {
+        {PresentationStatus.Ready, "обработка завершена"},
+        {PresentationStatus.Queue, "в очереди на обработку"},
+        {PresentationStatus.Processing,  "идет обработка..."}
+    };
+}
+<div class="presentation-view-list-item">
+    <div class="presentation-view-list-item__logo">
+        <a href="@Url.Action("Watch", "Presentation", new {id = Model.Id})" target="_blank">
+            <div class="presentation-view-item__image-container presentation-view-item-list__size_fix">
+                <img class="presentation-view-item__image-small" src="@Model.LogoUrl160" />
+                <span class="presentation-view-item__slide-count">@Model.SlideCount</span>
+            </div>
+        </a>
+        <span class="text-secondary text-italic">Логотип: слайд №@Model.LogoSlideIndex</span>
+    </div>
+    <div class="presentation-view-list-item__info">
+        <div class="presentation-view-item__title ys-ellipsis" title="@Model.Title">
+            @Html.Partial("Helpers/VisibilityIcon", Model.Visibility)
+            <a href="@Url.Action("Watch", "Presentation", new {id = Model.Id})" target="_blank">
+                @Model.Title
+            </a>
+        </div>
+        <div class="presentation-view-item__info">
+            @if (Model.Status != PresentationStatus.Ready) {
+                <div class="presentation-view-item__status">
+                    @status[Model.Status]
+                </div>
+            }
+            <div class="presentation-view-item__watch-count">
+                Просмотров @Model.WatchCount
+            </div>
+            <div class="presentation-view-item__created" data-datetime="@Model.Created" data-datetime-format="full"></div>
+        </div>
+
+    </div>
+    <div class="presentation-view-list-item__actions">
+        @Html.ActionLink("Редактировать", "Edit", "Presentation", new { id = Model.Id }, new { @class = "action-item link-button" })
+        <span class="action-delete action-item link-button">Удалить</span>
+        <div class="delete__confirm-container ys-hide">
+            <div class="text-italic text-small">Подтвердить</div>
+            <span class="delete-confirm link-button" data-presentation-id="@Model.Id">Да</span>
+            <span class="delete-deny link-button">Нет</span>
+
+        </div>
+        <div class="delete__progress ys-hide">
+            <img src="@Url.Content("~/Content/images/progress.gif")" />
+            Выполняется...
+        </div>
+        <div class="delete__error field-validation-error ys-hide">
+            Произошла ошибка
+        </div>
+    </div>
+</div>

@@ -6,7 +6,12 @@ namespace YourSlides.Web.Tools {
             return id.ToString();
         }
         public static long Deobfuscate(string str) {
-            return Int64.Parse(str);
+            try {
+                return Int64.Parse(str);
+            } catch (Exception) {
+                return -1;
+            }
+
         }
     }
 }
