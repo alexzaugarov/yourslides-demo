@@ -33,7 +33,7 @@ namespace YourSlides.Web.Controllers {
             var presentationView = new WatchPageViewModel {
                 Presentation = _mapper.Map<PresentationApi>(presentation),
                 RelatedPresentations = _mapper.Map<IEnumerable<PresentationApi>>(relatedPresentation),
-                IsOwner = presentation != null && presentation.OwnerId == User.Identity.GetUserId()
+                IsOwner = presentation != null && presentation.OwnerId == visitorId
             };
             _presentationService.Save();
             return View(presentationView);
@@ -55,26 +55,6 @@ namespace YourSlides.Web.Controllers {
             var m = _mapper.Map<PresentationApi>(presentation);
             return View(m);
         }
-        /*[Authorize]
-        [HttpPost]
-        public ActionResult Edit(PresentationApi p) {
-            if (ModelState.IsValid) {
-                var pId = _presentationService.Get(Obfuscator.Deobfuscate(p.Id), User.Identity.GetUserId(), Permission.High);
-                try {
-                    if (pId == null) {
-                        return Json(new { success = false });
-                    }
-                    var result = _presentationService.UpdateAfterEdit(_mapper.Map<Presentation>(p));
-                    if (result) {
-                        _presentationService.Save();
-                    }
-                    return Json(new { success = result });
-                } catch (Exception exception) {
-                    Debug.WriteLine(exception.Message);
-                }
-            }
-            return Json(new { success = false });
-        }*/
 
         [Authorize]
         [HttpGet]
@@ -97,12 +77,6 @@ namespace YourSlides.Web.Controllers {
                 _presentationService.Delete(presentation);
                 return new FileUploaderResult(false, messageResult);
             }
-            //return new FileUploaderResult(true, new { url = Url.Action("Edit", new { Id = 12 }) });
-        }
-
-        public ActionResult GetSlide(long presentationId, int slideIndex, string quality = null) {
-            var filePath = _fileService.GetSlide(presentationId, slideIndex, quality);
-            return File(filePath, "image/jpeg");
         }
     }
 }

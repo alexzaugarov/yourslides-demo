@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yourslides.Model", "Yoursli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yourslides.Utils", "Yourslides.Utils\Yourslides.Utils.csproj", "{31E087E1-CEAB-40D8-B481-17FE3E87C7BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yourslides.Tests", "Yourslides.Tests\Yourslides.Tests.csproj", "{719FA095-BA88-4B81-8D37-AEDFDAF59AA9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YourSlides.Web", "YourSlides.Web\YourSlides.Web.csproj", "{C50EC8C3-A027-4104-ACD4-F41EEE826238}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yourslides.Data", "Yourslides.Data\Yourslides.Data.csproj", "{A5C92B74-2DB7-4B6C-BE61-981C3DF0B0E1}"
@@ -31,10 +29,6 @@ Global
 		{31E087E1-CEAB-40D8-B481-17FE3E87C7BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31E087E1-CEAB-40D8-B481-17FE3E87C7BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31E087E1-CEAB-40D8-B481-17FE3E87C7BB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{719FA095-BA88-4B81-8D37-AEDFDAF59AA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{719FA095-BA88-4B81-8D37-AEDFDAF59AA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{719FA095-BA88-4B81-8D37-AEDFDAF59AA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{719FA095-BA88-4B81-8D37-AEDFDAF59AA9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C50EC8C3-A027-4104-ACD4-F41EEE826238}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C50EC8C3-A027-4104-ACD4-F41EEE826238}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C50EC8C3-A027-4104-ACD4-F41EEE826238}.Release|Any CPU.ActiveCfg = Release|Any CPU

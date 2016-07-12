@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -28,7 +27,8 @@ namespace YourSlides.Web.Controllers {
         public ActionResult Index(string userName = "") {
             var owner = UserManager.FindByName(userName);
             if (owner == null) {
-                return Redirect("~");
+                var redirectUrl = Request.UrlReferrer == null ? "~" : Request.UrlReferrer.ToString();
+                return Redirect(redirectUrl);
             }
             var searchOptions = new PresentationSelectionOptions {
                 Count = 15,

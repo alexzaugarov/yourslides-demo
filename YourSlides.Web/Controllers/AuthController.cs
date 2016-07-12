@@ -37,7 +37,7 @@ namespace YourSlides.Web.Controllers {
         //POST: Auth
         [HttpPost]
         [AnonymousOnly]
-        public ActionResult Signin(SigninPage model) {
+        public ActionResult Signin(SigninPage model, string returnUrl) {
             if (!ModelState.IsValid) {
                 return View();
             }
@@ -46,6 +46,9 @@ namespace YourSlides.Web.Controllers {
 
             if (user != null) {
                 SignIn(user, model.IsPersistent);
+                if (!String.IsNullOrEmpty(returnUrl)) {
+                    return Redirect(returnUrl);
+                }
                 return RedirectToAction("Index", "Home");
             }
 
@@ -58,10 +61,6 @@ namespace YourSlides.Web.Controllers {
             if (!ModelState.IsValid) {
                 return View();
             }
-            if (!String.Equals(model.Password, model.ConfirmPassword)) {
-                ModelState.AddModelError("", "Пароли не совпадают");
-                return View(model);
-            }
 
             var user = new User {
                 UserName = model.UserName,
@@ -73,7 +72,10 @@ namespace YourSlides.Web.Controllers {
             if (result.Succeeded) {
                 UserManager.AddToRole(UserManager.FindByName(user.UserName).Id, "users");
                 SignIn(user, true);
-                return RedirectToAction("index", "home");
+                if (!String.IsNullOrEmpty(returnUrl)) {
+                    return Redirect(returnUrl);
+                }
+                return RedirectToAction("Index", "Home");
             }
 
             foreach (var error in result.Errors) {

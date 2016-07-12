@@ -1,5 +1,4 @@
 using System.Web.Http;
-using System.Web.Mvc;
 using YourSlides.Web.Infrastructure;
 using YourSlides.Web.Mappings;
 

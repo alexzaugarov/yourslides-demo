@@ -5,7 +5,6 @@ namespace YourSlides.Web.Mappings {
     public class InjectConfigurationMapping : NinjectModule {
         public override void Load() {
             var config = new MapperConfiguration(x => {
-                x.AddProfile<DomainToViewModelMappingProfile>();
                 x.AddProfile<DomainToApiMappingProfile>();
                 x.AddProfile<ApiToDomainMappingProfile>();
             });

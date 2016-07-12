@@ -227,18 +227,12 @@
     <Content Include="Content\presentation_preview_item.css" />
     <Content Include="Content\presentation_watch.css" />
     <Content Include="Content\spectrum.css" />
-    <Content Include="Content\upload.css" />
     <Content Include="Content\user-page.css" />
     <Content Include="Global.asax" />
-    <Content Include="scripts\app\app-lib\thumbnailViewer.js" />
     <Content Include="scripts\app\app-lib\viewer.js" />
     <Content Include="scripts\app\common.js" />
     <Content Include="scripts\app\myplugins\jquery.colordata.js" />
     <Content Include="scripts\app\basic.js" />
-    <Content Include="scripts\app\controllers\Index.js" />
-    <Content Include="scripts\app\controller_table.js" />
-    <Content Include="scripts\app\hb-helpers.js" />
-    <Content Include="scripts\app\main.js" />
     <Content Include="scripts\app\myplugins\jquery.imagecolorpicker.js" />
     <Content Include="scripts\app\p-edit.js" />
     <Content Include="scripts\app\p-index.js" />
@@ -281,27 +275,17 @@
     <Content Include="scripts\lib\jquery.validate.unobtrusive.min.js" />
     <Content Include="scripts\lib\jquery.signalR-2.2.0.js" />
     <Content Include="scripts\lib\jquery.signalR-2.2.0.min.js" />
-    <Content Include="scripts\lib\crossroads.js" />
-    <Content Include="scripts\lib\crossroads.min.js" />
     <Content Include="scripts\lib\handlebars-latest.js" />
     <Content Include="scripts\lib\handlebars.min-latest.js" />
     <Content Include="scripts\lib\handlebars.runtime-latest.js" />
     <Content Include="scripts\lib\jquery-2.2.3.js" />
     <Content Include="scripts\lib\jquery-2.2.3.min.js" />
     <Content Include="scripts\lib\jquery-ui.js" />
-    <Content Include="scripts\lib\jquery.history-min.js" />
-    <Content Include="scripts\lib\jquery.history.js" />
     <Content Include="scripts\lib\jquery.spectrum-ru.js" />
     <Content Include="scripts\lib\r.js" />
     <Content Include="scripts\lib\require.js" />
     <Content Include="scripts\lib\moment-with-locales.js" />
     <Content Include="scripts\lib\moment-with-locales.min.js" />
-    <Content Include="scripts\lib\moment.js" />
-    <Content Include="scripts\lib\moment.min.js" />
-    <Content Include="scripts\lib\path.js" />
-    <Content Include="scripts\lib\path.min.js" />
-    <Content Include="scripts\lib\signals.js" />
-    <Content Include="scripts\lib\signals.min.js" />
     <Content Include="scripts\lib\spectrum.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -333,16 +317,12 @@
     <Compile Include="Infrastructure\CommonNinjectModule.cs" />
     <Compile Include="Mappings\ApiToDomainMappingProfile.cs" />
     <Compile Include="Mappings\DomainToApiMappingProfile.cs" />
-    <Compile Include="Mappings\DomainToViewModelMappingProfile.cs" />
     <Compile Include="Mappings\InjectConfigurationMapping.cs" />
     <Compile Include="Models\Auth\SigninPage.cs" />
     <Compile Include="Models\Auth\SignupPage.cs" />
-    <Compile Include="Models\EditViewModel.cs" />
     <Compile Include="Models\MainPageModel.cs" />
     <Compile Include="Models\ManagerPageViewModel.cs" />
     <Compile Include="Models\PageStatesLabel.cs" />
-    <Compile Include="Models\PresentationViewModel.cs" />
-    <Compile Include="Models\ThumbnailItem.cs" />
     <Compile Include="Models\UserPageViewModel.cs" />
     <Compile Include="Models\WatchPageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -362,16 +342,12 @@
     <Content Include="Views\Auth\Signin.cshtml" />
     <Content Include="scripts\fine-uploader\LICENSE" />
     <Content Include="scripts\lib\jquery-2.2.3.min.map" />
-    <Content Include="scripts\templates\main-page.handlebars" />
-    <Content Include="scripts\templates\p-edit-form.handlebars" />
     <None Include="Views\Auth\Signup.cshtml" />
     <Content Include="Views\Presentation\Upload.cshtml" />
     <Content Include="Views\Presentation\Edit.cshtml" />
     <Content Include="Views\Presentation\Embed.cshtml" />
     <None Include="Views\Presentation\Watch.cshtml" />
     <Content Include="Views\Shared\_Player.cshtml" />
-    <Content Include="Views\Shared\_PresentationEditInfoForm.cshtml" />
-    <Content Include="Views\Shared\_SlideThumbnail.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Shared\_SortControls.cshtml" />
     <Content Include="Views\Shared\_PresentationList.cshtml" />
@@ -394,8 +370,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Extensions\" />
-    <Folder Include="Views\Shared\EditorTemplates\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Yourslides.Data\Yourslides.Data.csproj">
@@ -448,7 +422,8 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>handlebars -m $(ProjectDir)scripts\templates\ -f $(ProjectDir)scripts\app\templates.js  -n YourSlides</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -27,9 +27,6 @@
 
 <script src="@Url.Content("~/scripts/app/p-index.js")" type="text/javascript"></script>
 <script>
-    //window.onload(function () {
     document.getElementsByName("searchstring")[0].value = "@Model.SearchOptions.SearchString";
-    //});
-
 </script>
 @Html.Partial("Templates/_PresentationPreviewItemTemplate")

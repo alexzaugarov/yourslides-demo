@@ -7,7 +7,6 @@ namespace YourSlides.Web {
                 "~/scripts/lib/jquery-{version}.js",
                 "~/scripts/lib/moment-with-locale.{version}.js",
                 "~/scripts/lib/handlebars.runtime-latest.js"));
-            bundles.Add(new Bundle("~/bundles/jscolor").Include("~/scripts/lib/jscolor{version}.js"));
         }
     }
 }

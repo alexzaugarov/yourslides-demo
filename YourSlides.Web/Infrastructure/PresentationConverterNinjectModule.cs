@@ -15,9 +15,6 @@ namespace YourSlides.Web.Infrastructure {
             var presentationWatchRepository = new PresentationWatchRepository(dbFactory);
             var presentationService = new PresentationService(unitOfWork, presentationRepository, presentationWatchRepository);
             Bind<IPresentationService>().ToConstant(presentationService).WhenInjectedInto<ConverterManager>();
-            /*Bind<IPresentationService>().To<PresentationService>().WhenInjectedInto<Converter>().Named("ToConverter");
-            Bind<IUnitOfWork>().To<UnitOfWork>().WhenParentNamed("ToConverter").Named("UnitOfWorkToConverter");
-            Bind<IDbFactory>().To<DbFactory>().WhenParentNamed("UnitOfWorkToConverter");*/
             Bind<IConverterManager, IConverterService>().To<ConverterManager>().InSingletonScope();
             Bind<IConverter>().To<Converter>().InSingletonScope();
             Bind<GhostscriptProcessorFactory>().ToSelf();

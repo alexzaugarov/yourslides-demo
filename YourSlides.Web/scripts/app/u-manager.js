@@ -15,11 +15,6 @@
             var $cofirmContainer = $(this).next().removeClass("ys-hide");
             $(this).addClass("ys-hide");
             $(this).parent().find(".delete__error").addClass("ys-hide");
-            /*intervalId = setTimeout(function () {
-                $cofirmContainer.addClass("ys-hide");
-            }, 10000);
-        clearTimeout($cofirmContainer.data("hide-handler"));
-        $cofirmContainer.data("hide-handler", intervalId);*/
         });
         $("#presentations-container").on("click", ".delete-deny", function (event) {
             $(this).parent().addClass("ys-hide");
